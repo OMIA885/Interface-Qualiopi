@@ -831,6 +831,7 @@
                     daysBeforeTarget: 180,
                     duration: 30,
                     type: "preparation"
+                    link:"preparation_documentation_page.html"
                 },
                 {
                     name: "Recevabilité",
@@ -838,6 +839,7 @@
                     daysBeforeTarget: 150,
                     duration: 15,
                     type: "administrative"
+                    link:""
                 },
                 {
                     name: "Préparation audit initial",
@@ -845,6 +847,7 @@
                     daysBeforeTarget: 120,
                     duration: 90,
                     type: "preparation"
+                    link:""
                 },
                 {
                     name: "Audit initial",
@@ -852,6 +855,7 @@
                     daysBeforeTarget: 30,
                     duration: 1,
                     type: "audit"
+                    link:""
                 },
                 {
                     name: "Certification obtenue",
@@ -859,6 +863,7 @@
                     daysBeforeTarget: 0,
                     duration: 0,
                     type: "certification"
+                    link:""
                 }
             ];
 
@@ -890,39 +895,58 @@
                 return 'upcoming';
             }
         }
-
+        
         function displayTimeline(timeline) {
-            const container = document.getElementById('timeline');
-            const timelineContainer = document.getElementById('timelineContainer');
-            
-            let timelineHTML = '';
-            let completedCount = 0;
-            
-            timeline.forEach((item, index) => {
-                if (item.status === 'completed') completedCount++;
-                
-                timelineHTML += `
-                    <div class="timeline-item">
-                        <div class="timeline-dot ${item.status}"></div>
-                        <div class="timeline-content">
-                            <h4>${item.name}</h4>
-                            <div class="date">${formatDate(item.date)}</div>
-                            <p>${item.description}</p>
-                            <span class="status ${item.status}">
-                                ${getStatusLabel(item.status)}
-                            </span>
-                        </div>
-                    </div>
-                `;
-            });
-
-            container.innerHTML = `
-                <div class="timeline-line"></div>
-                <div class="timeline-progress" style="height: ${(completedCount / timeline.length) * 100}%"></div>
-                ${timelineHTML}
+          const container = document.getElementById('timeline');
+          const timelineContainer = document.getElementById('timelineContainer');
+          
+          let timelineHTML = '';
+          let completedCount = 0;
+          
+          timeline.forEach((item) => {
+            if (item.status === 'completed') completedCount++;
+        
+            // Bouton : actif si un lien est renseigné, sinon désactivé
+            const buttonHTML = item.link && item.link.trim() !== ""
+              ? `
+                <div style="margin-top:10px">
+                  <a href="${item.link}" class="btn btn-primary" style="text-decoration:none;">
+                    Ouvrir la page liée
+                  </a>
+                </div>
+              `
+              : `
+                <div style="margin-top:10px">
+                  <button class="btn btn-primary" style="opacity:.6; cursor:not-allowed;" disabled
+                          title="Lien à venir">
+                    Page liée (à venir)
+                  </button>
+                </div>
+              `;
+        
+            timelineHTML += `
+              <div class="timeline-item">
+                <div class="timeline-dot ${item.status}"></div>
+                <div class="timeline-content">
+                  <h4>${item.name}</h4>
+                  <div class="date">${formatDate(item.date)}</div>
+                  <p>${item.description}</p>
+                  <span class="status ${item.status}">
+                    ${getStatusLabel(item.status)}
+                  </span>
+                  ${buttonHTML}
+                </div>
+              </div>
             `;
-
-            timelineContainer.style.display = 'block';
+          });
+        
+          container.innerHTML = `
+            <div class="timeline-line"></div>
+            <div class="timeline-progress" style="height: ${(completedCount / timeline.length) * 100}%"></div>
+            ${timelineHTML}
+          `;
+        
+          timelineContainer.style.display = 'block';
         }
 
         function updateTimelineSummary() {
