@@ -1,0 +1,1058 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Préparation Certification Qualiopi</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            color: white;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            font-weight: 300;
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .nav-tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50px;
+            padding: 5px;
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-tab {
+            padding: 15px 30px;
+            border: none;
+            background: none;
+            color: white;
+            cursor: pointer;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            font-size: 1em;
+            font-weight: 500;
+        }
+
+        .nav-tab.active {
+            background: white;
+            color: #667eea;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-tab:hover:not(.active) {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .content-panel {
+            display: none;
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .content-panel.active {
+            display: block;
+        }
+
+        /* Dashboard Panel */
+        .dashboard-panel {
+            display: grid;
+            gap: 30px;
+        }
+
+        .summary-card, .timeline-card {
+            background: linear-gradient(135deg, #f8f9ff 0%, #e8ecff 100%);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        }
+
+        .summary-card h3, .timeline-card h3 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 1.4em;
+        }
+
+        .org-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .info-item {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+        }
+
+        .info-item strong {
+            display: block;
+            color: #667eea;
+            margin-bottom: 5px;
+            font-size: 0.9em;
+            text-transform: uppercase;
+        }
+
+        /* Questionnaire Panel */
+        .form-section {
+            margin-bottom: 40px;
+            background: #f8f9ff;
+            border-radius: 15px;
+            padding: 30px;
+        }
+
+        .form-section h3 {
+            color: #667eea;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #e8ecff;
+            padding-bottom: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #555;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e8ecff;
+            border-radius: 8px;
+            font-size: 1em;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .checkbox-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            background: white;
+            border-radius: 8px;
+            border: 2px solid #e8ecff;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .checkbox-item:hover {
+            border-color: #667eea;
+            background: #f8f9ff;
+        }
+
+        .checkbox-item input[type="checkbox"] {
+            width: auto;
+            margin-right: 10px;
+        }
+
+        /* Timeline */
+        .timeline {
+            position: relative;
+            margin: 30px 0;
+        }
+
+        .timeline-line {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(to bottom, #667eea, #764ba2);
+            border-radius: 2px;
+            transform: translateX(-50%);
+        }
+
+        .timeline-progress {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            width: 4px;
+            height: 0%;
+            background: #4ade80;
+            border-radius: 2px;
+            transform: translateX(-50%);
+            transition: height 0.5s ease;
+        }
+
+        .timeline-item {
+            display: flex;
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .timeline-item:nth-child(odd) .timeline-content {
+            margin-right: auto;
+            margin-left: 0;
+            text-align: right;
+        }
+
+        .timeline-item:nth-child(even) .timeline-content {
+            margin-left: auto;
+            margin-right: 0;
+            text-align: left;
+        }
+
+        .timeline-content {
+            width: 45%;
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            position: relative;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: 50%;
+            top: 20px;
+            width: 20px;
+            height: 20px;
+            background: #667eea;
+            border: 4px solid white;
+            border-radius: 50%;
+            transform: translateX(-50%);
+            z-index: 2;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .timeline-dot.completed {
+            background: #4ade80;
+        }
+
+        .timeline-dot.current {
+            background: #f59e0b;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(245, 158, 11, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0); }
+        }
+
+        .timeline-content h4 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .timeline-content .date {
+            color: #666;
+            font-size: 0.9em;
+            margin-bottom: 10px;
+        }
+
+        .timeline-content .status {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            font-weight: 600;
+        }
+
+        .status.completed {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .status.current {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .status.upcoming {
+            background: #f1f5f9;
+            color: #475569;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 25px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-secondary {
+            background: #f8f9ff;
+            color: #667eea;
+            border: 2px solid #667eea;
+        }
+
+        .btn-secondary:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        .form-actions {
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .timeline-line,
+            .timeline-progress {
+                left: 30px;
+            }
+
+            .timeline-dot {
+                left: 30px;
+            }
+
+            .timeline-content {
+                width: calc(100% - 80px);
+                margin-left: 60px !important;
+                margin-right: 0 !important;
+                text-align: left !important;
+            }
+
+            .org-info {
+                grid-template-columns: 1fr;
+            }
+
+            .checkbox-group {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-tabs {
+                flex-direction: column;
+                border-radius: 15px;
+            }
+
+            .nav-tab {
+                border-radius: 10px;
+            }
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #666;
+        }
+
+        .empty-state-icon {
+            font-size: 4em;
+            margin-bottom: 20px;
+            opacity: 0.5;
+        }
+
+        .alert {
+            padding: 15px 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border-left: 4px solid;
+        }
+
+        .alert-info {
+            background: #e0f2fe;
+            border-color: #0288d1;
+            color: #01579b;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>🎓 Préparation Certification Qualiopi</h1>
+            <p>Votre accompagnement personnalisé vers la certification qualité</p>
+        </header>
+
+        <nav class="nav-tabs">
+            <button class="nav-tab active" onclick="switchTab('dashboard')">📊 Tableau de bord</button>
+            <button class="nav-tab" onclick="switchTab('questionnaire')">📝 Questionnaire</button>
+            <button class="nav-tab" onclick="switchTab('planning')">📅 Planning</button>
+        </nav>
+
+        <!-- Dashboard Panel -->
+        <div id="dashboard" class="content-panel active">
+            <div class="dashboard-panel">
+                <div class="summary-card">
+                    <h3>📋 Récapitulatif de votre organisme</h3>
+                    <div id="organizationSummary">
+                        <div class="empty-state">
+                            <div class="empty-state-icon">📝</div>
+                            <h4>Questionnaire non complété</h4>
+                            <p>Veuillez d'abord remplir le questionnaire pour voir le récapitulatif de votre organisme et les indicateurs applicables.</p>
+                            <button class="btn btn-primary" onclick="switchTab('questionnaire')" style="margin-top: 20px;">
+                                Commencer le questionnaire
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-card">
+                    <h3>🎯 Votre rétro-planning</h3>
+                    <div id="timelineSummary">
+                        <div class="empty-state">
+                            <div class="empty-state-icon">📅</div>
+                            <h4>Planning non configuré</h4>
+                            <p>Définissez votre date cible et votre temps quotidien pour générer votre rétro-planning personnalisé.</p>
+                            <button class="btn btn-primary" onclick="switchTab('planning')" style="margin-top: 20px;">
+                                Configurer le planning
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Questionnaire Panel -->
+        <div id="questionnaire" class="content-panel">
+            <div class="alert alert-info">
+                <strong>Information :</strong> Ce questionnaire nous permet d'identifier les 32 indicateurs Qualiopi applicables à votre organisme et de personnaliser votre préparation.
+            </div>
+
+            <form id="qualiopi-form">
+                <!-- Section 1: Informations générales -->
+                <div class="form-section">
+                    <h3>🏢 Informations générales sur votre organisme</h3>
+                    
+                    <div class="form-group">
+                        <label for="orgName">Nom de l'organisme *</label>
+                        <input type="text" id="orgName" name="orgName" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="orgSize">Taille de l'organisme *</label>
+                        <select id="orgSize" name="orgSize" required>
+                            <option value="">Sélectionnez...</option>
+                            <option value="independent">Formateur indépendant (auto-entrepreneur/micro-entreprise)</option>
+                            <option value="small">Petite structure (2-10 salariés)</option>
+                            <option value="medium">Structure moyenne (11-50 salariés)</option>
+                            <option value="large">Grande structure (50+ salariés)</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="hasNDA">Avez-vous un Numéro de Déclaration d'Activité (NDA) ? *</label>
+                        <select id="hasNDA" name="hasNDA" required>
+                            <option value="">Sélectionnez...</option>
+                            <option value="yes">Oui, j'ai un NDA</option>
+                            <option value="pending">En cours d'obtention</option>
+                            <option value="no">Non, pas encore</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="isNewEntrant">Êtes-vous un "nouvel entrant" ? *</label>
+                        <select id="isNewEntrant" name="isNewEntrant" required>
+                            <option value="">Sélectionnez...</option>
+                            <option value="yes">Oui (première année d'activité ou nouveau type d'action)</option>
+                            <option value="no">Non</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Section 2: Types d'activités -->
+                <div class="form-section">
+                    <h3>🎯 Types d'activités proposées</h3>
+                    
+                    <div class="form-group">
+                        <label>Quelles catégories d'actions proposez-vous ? (plusieurs choix possibles) *</label>
+                        <div class="checkbox-group">
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="activity-formation" name="activities" value="formation">
+                                <label for="activity-formation">Actions de formation</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="activity-vae" name="activities" value="vae">
+                                <label for="activity-vae">VAE (Validation des Acquis de l'Expérience)</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="activity-cbc" name="activities" value="cbc">
+                                <label for="activity-cbc">Bilans de compétences (CBC)</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="activity-cfa" name="activities" value="cfa">
+                                <label for="activity-cfa">Actions de formation par apprentissage (CFA)</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section 3: Caractéristiques des formations -->
+                <div class="form-section">
+                    <h3>📚 Caractéristiques de vos formations</h3>
+                    
+                    <div class="form-group">
+                        <label>Vos formations sont-elles certifiantes ? *</label>
+                        <div class="checkbox-group">
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="certifying-yes" name="certifying" value="yes">
+                                <label for="certifying-yes">Oui, certaines formations sont certifiantes</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="certifying-no" name="certifying" value="no">
+                                <label for="certifying-no">Non, formations non certifiantes uniquement</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="trainingDuration">Durée typique de vos formations</label>
+                        <select id="trainingDuration" name="trainingDuration">
+                            <option value="">Sélectionnez...</option>
+                            <option value="short">Formations courtes (moins de 2 jours)</option>
+                            <option value="medium">Formations moyennes (2-10 jours)</option>
+                            <option value="long">Formations longues (plus de 10 jours)</option>
+                            <option value="mixed">Mix de durées différentes</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Modalités de formation proposées *</label>
+                        <div class="checkbox-group">
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="modality-presential" name="modalities" value="presential">
+                                <label for="modality-presential">Présentiel</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="modality-distance" name="modalities" value="distance">
+                                <label for="modality-distance">À distance (visioconférence)</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="modality-elearning" name="modalities" value="elearning">
+                                <label for="modality-elearning">E-learning (plateforme LMS)</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="modality-blended" name="modalities" value="blended">
+                                <label for="modality-blended">Mixte (blended learning)</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section 4: Organisation -->
+                <div class="form-section">
+                    <h3>👥 Organisation et ressources</h3>
+                    
+                    <div class="form-group">
+                        <label for="hasOwnLocals">Disposez-vous de locaux propres ?</label>
+                        <select id="hasOwnLocals" name="hasOwnLocals">
+                            <option value="">Sélectionnez...</option>
+                            <option value="yes">Oui</option>
+                            <option value="no">Non (intervention chez le client/location)</option>
+                            <option value="mixed">Les deux</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="usesSoustraitance">Faites-vous appel à la sous-traitance ?</label>
+                        <select id="usesSoustraitance" name="usesSoustraitance">
+                            <option value="">Sélectionnez...</option>
+                            <option value="yes">Oui</option>
+                            <option value="no">Non</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="isMultiSite">Êtes-vous multi-sites ?</label>
+                        <select id="isMultiSite" name="isMultiSite">
+                            <option value="">Sélectionnez...</option>
+                            <option value="yes">Oui</option>
+                            <option value="no">Non</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Générer mon récapitulatif</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Planning Panel -->
+        <div id="planning" class="content-panel">
+            <div class="alert alert-info">
+                <strong>Planification :</strong> Définissez votre date cible et le temps que vous souhaitez consacrer quotidiennement à la préparation pour générer votre rétro-planning.
+            </div>
+
+            <form id="planning-form" class="form-section">
+                <h3>📅 Configuration du planning</h3>
+                
+                <div class="form-group">
+                    <label for="targetDate">Date cible pour obtenir la certification *</label>
+                    <input type="date" id="targetDate" name="targetDate" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="dailyTime">Temps quotidien consacré à la préparation (en heures) *</label>
+                    <select id="dailyTime" name="dailyTime" required>
+                        <option value="">Sélectionnez...</option>
+                        <option value="0.5">30 minutes par jour</option>
+                        <option value="1">1 heure par jour</option>
+                        <option value="2">2 heures par jour</option>
+                        <option value="4">4 heures par jour</option>
+                        <option value="8">Temps plein (8h par jour)</option>
+                    </select>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Générer le rétro-planning</button>
+                </div>
+            </form>
+
+            <div id="timelineContainer" style="display: none;">
+                <h3>🎯 Votre rétro-planning personnalisé</h3>
+                <div class="timeline" id="timeline">
+                    <!-- Timeline will be generated here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Data storage
+        let organizationData = {};
+        let planningData = {};
+
+        // Tab switching
+        function switchTab(tabName) {
+            // Update tab buttons
+            document.querySelectorAll('.nav-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.querySelector(`[onclick="switchTab('${tabName}')"]`).classList.add('active');
+
+            // Update content panels
+            document.querySelectorAll('.content-panel').forEach(panel => {
+                panel.classList.remove('active');
+            });
+            document.getElementById(tabName).classList.add('active');
+        }
+
+        // Form handlers
+        document.getElementById('qualiopi-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            processQuestionnaire();
+        });
+
+        document.getElementById('planning-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            processPlanning();
+        });
+
+        function processQuestionnaire() {
+            const formData = new FormData(document.getElementById('qualiopi-form'));
+            organizationData = {};
+
+            // Process form data
+            for (let [key, value] of formData.entries()) {
+                if (organizationData[key]) {
+                    if (Array.isArray(organizationData[key])) {
+                        organizationData[key].push(value);
+                    } else {
+                        organizationData[key] = [organizationData[key], value];
+                    }
+                } else {
+                    organizationData[key] = value;
+                }
+            }
+
+            // Process checkboxes
+            const activities = [];
+            document.querySelectorAll('input[name="activities"]:checked').forEach(cb => {
+                activities.push(cb.value);
+            });
+            organizationData.activities = activities;
+
+            const modalities = [];
+            document.querySelectorAll('input[name="modalities"]:checked').forEach(cb => {
+                modalities.push(cb.value);
+            });
+            organizationData.modalities = modalities;
+
+            const certifying = [];
+            document.querySelectorAll('input[name="certifying"]:checked').forEach(cb => {
+                certifying.push(cb.value);
+            });
+            organizationData.certifying = certifying;
+
+            updateOrganizationSummary();
+            switchTab('dashboard');
+        }
+
+        function updateOrganizationSummary() {
+            const summaryContainer = document.getElementById('organizationSummary');
+            const applicableIndicators = getApplicableIndicators();
+            
+            summaryContainer.innerHTML = `
+                <div class="org-info">
+                    <div class="info-item">
+                        <strong>Organisme</strong>
+                        <div>${organizationData.orgName || 'Non renseigné'}</div>
+                    </div>
+                    <div class="info-item">
+                        <strong>Taille</strong>
+                        <div>${getOrgSizeLabel(organizationData.orgSize)}</div>
+                    </div>
+                    <div class="info-item">
+                        <strong>NDA</strong>
+                        <div>${getNDALabel(organizationData.hasNDA)}</div>
+                    </div>
+                    <div class="info-item">
+                        <strong>Statut</strong>
+                        <div>${organizationData.isNewEntrant === 'yes' ? 'Nouvel entrant' : 'Établi'}</div>
+                    </div>
+                    <div class="info-item">
+                        <strong>Activités</strong>
+                        <div>${getActivitiesLabel(organizationData.activities)}</div>
+                    </div>
+                    <div class="info-item">
+                        <strong>Modalités</strong>
+                        <div>${getModalitiesLabel(organizationData.modalities)}</div>
+                    </div>
+                </div>
+                
+                <div style="margin-top: 30px;">
+                    <h4 style="color: #667eea; margin-bottom: 15px;">📊 Indicateurs Qualiopi applicables</h4>
+                    <div style="background: white; padding: 20px; border-radius: 10px;">
+                        <p><strong>${applicableIndicators.total} indicateurs</strong> sur 32 sont applicables à votre organisme :</p>
+                        <ul style="margin-top: 10px; padding-left: 20px;">
+                            <li><strong>${applicableIndicators.mandatory}</strong> indicateurs socles (obligatoires pour tous)</li>
+                            <li><strong>${applicableIndicators.specific}</strong> indicateurs spécifiques à vos activités</li>
+                            ${organizationData.isNewEntrant === 'yes' ? '<li><strong>Modalités adaptées</strong> pour nouveaux entrants sur certains indicateurs</li>' : ''}
+                        </ul>
+                    </div>
+                </div>
+
+                <div style="margin-top: 20px; text-align: center;">
+                    <button class="btn btn-secondary" onclick="switchTab('questionnaire')">Modifier les informations</button>
+                </div>
+            `;
+        }
+
+        function getApplicableIndicators() {
+            let total = 23; // Indicateurs socles
+            let mandatory = 23;
+            let specific = 0;
+
+            // Add specific indicators based on activities
+            if (organizationData.activities.includes('vae')) specific += 1; // VAE specific
+            if (organizationData.activities.includes('cbc')) specific += 1; // CBC specific  
+            if (organizationData.activities.includes('cfa')) specific += 8; // CFA specific
+            if (organizationData.certifying && organizationData.certifying.includes('yes')) specific += 2; // Certifying formations
+
+            total = mandatory + specific;
+
+            return { total, mandatory, specific };
+        }
+
+        function processPlanning() {
+            const formData = new FormData(document.getElementById('planning-form'));
+            planningData = {};
+
+            for (let [key, value] of formData.entries()) {
+                planningData[key] = value;
+            }
+
+            generateTimeline();
+            updateTimelineSummary();
+        }
+
+        function generateTimeline() {
+            const targetDate = new Date(planningData.targetDate);
+            const timeline = [];
+            
+            // Calculate milestones based on Qualiopi process
+            const milestones = [
+                {
+                    name: "Préparation documentation",
+                    description: "Rassemblement des documents administratifs et préparation du dossier",
+                    daysBeforeTarget: 180,
+                    duration: 30,
+                    type: "preparation"
+                },
+                {
+                    name: "Recevabilité",
+                    description: "Dépôt du dossier et examen de recevabilité",
+                    daysBeforeTarget: 150,
+                    duration: 15,
+                    type: "administrative"
+                },
+                {
+                    name: "Préparation audit initial",
+                    description: "Mise en place des processus et préparation des preuves",
+                    daysBeforeTarget: 120,
+                    duration: 90,
+                    type: "preparation"
+                },
+                {
+                    name: "Audit initial",
+                    description: "Audit sur site par l'organisme certificateur",
+                    daysBeforeTarget: 30,
+                    duration: 1,
+                    type: "audit"
+                },
+                {
+                    name: "Certification obtenue",
+                    description: "Obtention du certificat Qualiopi (valable 3 ans)",
+                    daysBeforeTarget: 0,
+                    duration: 0,
+                    type: "certification"
+                }
+            ];
+
+            // Generate timeline items
+            milestones.forEach(milestone => {
+                const milestoneDate = new Date(targetDate);
+                milestoneDate.setDate(milestoneDate.getDate() - milestone.daysBeforeTarget);
+                
+                timeline.push({
+                    ...milestone,
+                    date: milestoneDate,
+                    status: getTimelineStatus(milestoneDate, milestone.duration)
+                });
+            });
+
+            displayTimeline(timeline);
+        }
+
+        function getTimelineStatus(milestoneDate, duration) {
+            const today = new Date();
+            const endDate = new Date(milestoneDate);
+            endDate.setDate(endDate.getDate() + duration);
+
+            if (today > endDate) {
+                return 'completed';
+            } else if (today >= milestoneDate && today <= endDate) {
+                return 'current';
+            } else {
+                return 'upcoming';
+            }
+        }
+
+        function displayTimeline(timeline) {
+            const container = document.getElementById('timeline');
+            const timelineContainer = document.getElementById('timelineContainer');
+            
+            let timelineHTML = '';
+            let completedCount = 0;
+            
+            timeline.forEach((item, index) => {
+                if (item.status === 'completed') completedCount++;
+                
+                timelineHTML += `
+                    <div class="timeline-item">
+                        <div class="timeline-dot ${item.status}"></div>
+                        <div class="timeline-content">
+                            <h4>${item.name}</h4>
+                            <div class="date">${formatDate(item.date)}</div>
+                            <p>${item.description}</p>
+                            <span class="status ${item.status}">
+                                ${getStatusLabel(item.status)}
+                            </span>
+                        </div>
+                    </div>
+                `;
+            });
+
+            container.innerHTML = `
+                <div class="timeline-line"></div>
+                <div class="timeline-progress" style="height: ${(completedCount / timeline.length) * 100}%"></div>
+                ${timelineHTML}
+            `;
+
+            timelineContainer.style.display = 'block';
+        }
+
+        function updateTimelineSummary() {
+            const summaryContainer = document.getElementById('timelineSummary');
+            const targetDate = new Date(planningData.targetDate);
+            const today = new Date();
+            const daysRemaining = Math.ceil((targetDate - today) / (1000 * 60 * 60 * 24));
+
+            summaryContainer.innerHTML = `
+                <div class="org-info">
+                    <div class="info-item">
+                        <strong>Date cible</strong>
+                        <div>${formatDate(targetDate)}</div>
+                    </div>
+                    <div class="info-item">
+                        <strong>Jours restants</strong>
+                        <div>${daysRemaining > 0 ? daysRemaining : 0} jours</div>
+                    </div>
+                    <div class="info-item">
+                        <strong>Temps quotidien</strong>
+                        <div>${planningData.dailyTime}h par jour</div>
+                    </div>
+                    <div class="info-item">
+                        <strong>Temps total estimé</strong>
+                        <div>${Math.ceil(daysRemaining * parseFloat(planningData.dailyTime))}h</div>
+                    </div>
+                </div>
+                
+                <div style="margin-top: 20px; text-align: center;">
+                    <button class="btn btn-secondary" onclick="switchTab('planning')">Voir le planning détaillé</button>
+                </div>
+            `;
+        }
+
+        // Utility functions
+        function getOrgSizeLabel(size) {
+            const labels = {
+                'independent': 'Formateur indépendant',
+                'small': 'Petite structure (2-10 salariés)',
+                'medium': 'Structure moyenne (11-50 salariés)',
+                'large': 'Grande structure (50+ salariés)'
+            };
+            return labels[size] || 'Non renseigné';
+        }
+
+        function getNDALabel(nda) {
+            const labels = {
+                'yes': 'Obtenu',
+                'pending': 'En cours',
+                'no': 'À obtenir'
+            };
+            return labels[nda] || 'Non renseigné';
+        }
+
+        function getActivitiesLabel(activities) {
+            const labels = {
+                'formation': 'Actions de formation',
+                'vae': 'VAE',
+                'cbc': 'Bilans de compétences',
+                'cfa': 'Formation par apprentissage'
+            };
+            return activities ? activities.map(a => labels[a]).join(', ') : 'Non renseigné';
+        }
+
+        function getModalitiesLabel(modalities) {
+            const labels = {
+                'presential': 'Présentiel',
+                'distance': 'À distance',
+                'elearning': 'E-learning',
+                'blended': 'Mixte'
+            };
+            return modalities ? modalities.map(m => labels[m]).join(', ') : 'Non renseigné';
+        }
+
+        function getStatusLabel(status) {
+            const labels = {
+                'completed': 'Terminé',
+                'current': 'En cours',
+                'upcoming': 'À venir'
+            };
+            return labels[status] || status;
+        }
+
+        function formatDate(date) {
+            return date.toLocaleDateString('fr-FR', {
+                day: 'numeric',
+                month: 'long',
+                year: 'numeric'
+            });
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('DOM loaded, initializing...'); // Debug
+            
+            // Set minimum date for target date to today
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('targetDate').min = today;
+            
+            // Set default target date to 6 months from now
+            const defaultTarget = new Date();
+            defaultTarget.setMonth(defaultTarget.getMonth() + 6);
+            document.getElementById('targetDate').value = defaultTarget.toISOString().split('T')[0];
+            
+            // Load saved data
+            loadSavedData();
+            
+            // Initialize task progress if empty
+            if (Object.keys(taskProgress).length === 0) {
+                Object.keys(TASK_DEFINITIONS).forEach(taskId => {
+                    const taskDef = TASK_DEFINITIONS[taskId];
+                    for (let i = 0; i < taskDef.steps.length; i++) {
+                        const stepId = `${taskId}-step-${i}`;
+                        if (!(stepId in taskProgress)) {
+                            taskProgress[stepId] = false;
+                        }
+                    }
+                });
+            }
+            
+            // Add a test function to window for debugging
+            window.testTaskPage = function(taskId) {
+                console.log('Testing task page:', taskId);
+                openTaskPage(taskId);
+            };
+            
+            console.log('Available task definitions:', Object.keys(TASK_DEFINITIONS));
+            console.log('Task progress initialized:', Object.keys(taskProgress).length, 'steps');
+            console.log('Initialization complete');
+        });
+    </script>
+</body>
+</html>
