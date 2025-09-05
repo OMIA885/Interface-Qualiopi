@@ -384,33 +384,41 @@
         });
 
         function processQuestionnaire() {
-            const formData = new FormData(document.getElementById('qualiopi-form'));
-            organizationData = {};
-
-            for (let [key, value] of formData.entries()) {
-                if (organizationData[key]) {
-                    if (Array.isArray(organizationData[key])) organizationData[key].push(value);
-                    else organizationData[key] = [organizationData[key], value];
-                } else {
-                    organizationData[key] = value;
-                }
+          const formEl = document.getElementById('qualiopi-form');
+          const formData = new FormData(formEl);
+          organizationData = {};
+        
+          // 1) Champs "simples"
+          for (let [key, value] of formData.entries()) {
+            if (organizationData[key]) {
+              if (Array.isArray(organizationData[key])) organizationData[key].push(value);
+              else organizationData[key] = [organizationData[key], value];
+            } else {
+              organizationData[key] = value;
             }
-
-            const activities = [];
-            document.querySelectorAll('input[name="activities"]:checked').forEach(cb => activities.push(cb.value));
-            organizationData.activities = activities;
-
-            const modalities = [];
-            document.querySelectorAll('input[name="modalities"]:checked').forEach(cb => modalities.push(cb.value));
-            organizationData.modalities = modalities;
-
-            const certifying = [];
-            document.querySelectorAll('input[name="certifying"]:checked').forEach(cb => certifying.push(cb.value));
-            organizationData.certifying = certifying;
-
-            updateOrganizationSummary();
-            switchTab('dashboard');
+          }
+        
+          // 2) Checkbox / multi-choix (on force des tableaux propres)
+          const activities = [];
+          document.querySelectorAll('input[name="activities"]:checked').forEach(cb => activities.push(cb.value));
+          organizationData.activities = activities;
+        
+          const modalities = [];
+          document.querySelectorAll('input[name="modalities"]:checked').forEach(cb => modalities.push(cb.value));
+          organizationData.modalities = modalities;
+        
+          const certifying = [];
+          document.querySelectorAll('input[name="certifying"]:checked').forEach(cb => certifying.push(cb.value));
+          organizationData.certifying = certifying;
+        
+          // 3) Sauvegarde locale (✅ la ligne conseillée)
+          localStorage.setItem('qualiopi_organization_data', JSON.stringify(organizationData));
+        
+          // 4) UI
+          updateOrganizationSummary();
+          switchTab('dashboard');
         }
+
 
         function updateOrganizationSummary() {
             const summaryContainer = document.getElementById('organizationSummary');
