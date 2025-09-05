@@ -1,0 +1,1016 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Préparation Audit Initial - Qualiopi</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            margin-bottom: 20px;
+            transition: color 0.2s ease;
+            font-size: 1.1em;
+        }
+
+        .back-button:hover {
+            color: #e0e7ff;
+        }
+
+        .page-header {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 30px;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+        }
+
+        .page-header h1 {
+            color: #667eea;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .page-header p {
+            color: #666;
+            font-size: 1.2em;
+            margin-bottom: 30px;
+        }
+
+        .meta-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .meta-item {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+        }
+
+        .meta-item strong {
+            display: block;
+            font-size: 1.3em;
+            margin-bottom: 5px;
+        }
+
+        .progress-overview {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .progress-overview h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .overall-progress {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .progress-item {
+            text-align: center;
+            padding: 20px;
+            background: #f8f9ff;
+            border-radius: 12px;
+        }
+
+        .progress-item .number {
+            font-size: 2em;
+            font-weight: bold;
+            color: #667eea;
+            display: block;
+        }
+
+        .progress-item .label {
+            color: #666;
+            margin-top: 5px;
+        }
+
+        .criteria-section {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .criteria-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .criteria-header h3 {
+            font-size: 1.4em;
+            margin-bottom: 8px;
+        }
+
+        .criteria-header p {
+            opacity: 0.9;
+            font-size: 1em;
+        }
+
+        .criteria-progress {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 8px 20px;
+            border-radius: 20px;
+            display: inline-block;
+            margin-top: 10px;
+            font-weight: 600;
+        }
+
+        .indicators-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .indicator-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            position: relative;
+            border: 3px solid transparent;
+        }
+
+        .indicator-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.15);
+            border-color: #667eea;
+        }
+
+        .indicator-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+
+        .indicator-number {
+            font-size: 1.1em;
+            font-weight: bold;
+            color: #374151;
+        }
+
+        .status-indicator {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8em;
+            font-weight: bold;
+        }
+
+        .status-indicator.not-started {
+            background: #e5e7eb;
+            color: #6b7280;
+        }
+
+        .status-indicator.in-progress {
+            background: #fbbf24;
+            color: white;
+        }
+
+        .status-indicator.completed {
+            background: #10b981;
+            color: white;
+        }
+
+        .indicator-title {
+            font-size: 1.1em;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 12px;
+            line-height: 1.4;
+        }
+
+        .indicator-description {
+            color: #6b7280;
+            font-size: 0.95em;
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+
+        .indicator-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            font-size: 0.9em;
+        }
+
+        .indicator-type {
+            background: #f3f4f6;
+            color: #374151;
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-weight: 600;
+        }
+
+        .indicator-type.mandatory {
+            background: #fee2e2;
+            color: #dc2626;
+        }
+
+        .indicator-type.specific {
+            background: #dbeafe;
+            color: #2563eb;
+        }
+
+        .indicator-type.new-entrant {
+            background: #fef3c7;
+            color: #d97706;
+        }
+
+        .indicator-progress {
+            font-weight: 600;
+            color: #10b981;
+        }
+
+        .indicator-button {
+            width: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1em;
+        }
+
+        .indicator-button:hover {
+            background: linear-gradient(135deg, #5b21b6 0%, #6b46c1 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .no-data-message {
+            text-align: center;
+            padding: 60px;
+            color: #6b7280;
+        }
+
+        .no-data-message h3 {
+            color: #374151;
+            margin-bottom: 15px;
+        }
+
+        .no-data-message a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .no-data-message a:hover {
+            text-decoration: underline;
+        }
+
+        .loading-state {
+            text-align: center;
+            padding: 40px;
+            color: #667eea;
+        }
+
+        .action-buttons {
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 25px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            margin: 0 10px;
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #667eea;
+            border: 3px solid #667eea;
+        }
+
+        .btn-secondary:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .meta-info {
+                grid-template-columns: 1fr;
+            }
+
+            .overall-progress {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .indicators-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .page-header h1 {
+                font-size: 2em;
+            }
+
+            .criteria-header h3 {
+                font-size: 1.2em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="back-button">← Retour au planning</a>
+        
+        <div class="page-header">
+            <h1>🎯 Préparation Audit Initial</h1>
+            <p>Mise en place des processus qualité et préparation des preuves pour l'audit</p>
+            
+            <div class="meta-info">
+                <div class="meta-item">
+                    <strong>90 jours</strong>
+                    <div>Durée estimée</div>
+                </div>
+                <div class="meta-item">
+                    <strong id="start-date">À définir</strong>
+                    <div>Date de début</div>
+                </div>
+                <div class="meta-item">
+                    <strong id="end-date">À définir</strong>
+                    <div>Date de fin</div>
+                </div>
+                <div class="meta-item">
+                    <strong>Étape 3/5</strong>
+                    <div>Progression</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="progress-overview">
+            <h2>📊 Vue d'ensemble de votre progression</h2>
+            <div class="overall-progress">
+                <div class="progress-item">
+                    <span class="number" id="total-indicators">-</span>
+                    <div class="label">Indicateurs applicables</div>
+                </div>
+                <div class="progress-item">
+                    <span class="number" id="completed-indicators">-</span>
+                    <div class="label">Terminés</div>
+                </div>
+                <div class="progress-item">
+                    <span class="number" id="in-progress-indicators">-</span>
+                    <div class="label">En cours</div>
+                </div>
+                <div class="progress-item">
+                    <span class="number" id="not-started-indicators">-</span>
+                    <div class="label">À commencer</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Loading state -->
+        <div id="loading-state" class="loading-state">
+            <h3>⏳ Chargement de vos indicateurs...</h3>
+            <p>Analyse de votre questionnaire en cours...</p>
+        </div>
+
+        <!-- No data message -->
+        <div id="no-data-message" class="no-data-message" style="display: none;">
+            <h3>❓ Aucune donnée trouvée</h3>
+            <p>Veuillez d'abord remplir le <a href="index.html">questionnaire initial</a> pour voir vos indicateurs personnalisés.</p>
+            <div style="margin-top: 20px;">
+                <p style="font-size: 0.9em; color: #6b7280; margin-bottom: 15px;">
+                    <strong>Pour que cette page fonctionne :</strong>
+                </p>
+                <ol style="text-align: left; color: #6b7280; line-height: 1.6; max-width: 400px; margin: 0 auto;">
+                    <li>Retournez sur la <a href="index.html">page d'accueil</a></li>
+                    <li>Remplissez complètement le questionnaire</li>
+                    <li>Cliquez sur "Générer mon récapitulatif"</li>
+                    <li>Revenez sur cette page pour voir vos indicateurs</li>
+                </ol>
+            </div>
+        </div>
+
+        <!-- Criteria sections will be dynamically generated here -->
+        <div id="criteria-container">
+            <!-- Content will be populated by JavaScript -->
+        </div>
+
+        <div class="action-buttons">
+            <a href="index.html" class="btn btn-secondary">← Retour au planning</a>
+        </div>
+    </div>
+
+    <script>
+        // Qualiopi indicators definition
+        const QUALIOPI_INDICATORS = {
+            // Critère 1: Information au public
+            1: {
+                title: "Information accessible au public",
+                description: "Diffusion d'informations détaillées sur les prestations proposées",
+                criteria: 1,
+                type: "mandatory",
+                applicableFor: ["formation", "vae", "cbc", "cfa"]
+            },
+            2: {
+                title: "Indicateurs de résultats",
+                description: "Diffusion d'indicateurs de résultats adaptés aux prestations",
+                criteria: 1,
+                type: "mandatory",
+                applicableFor: ["formation", "vae", "cbc", "cfa"],
+                newEntrant: true
+            },
+            3: {
+                title: "Information sur certifications professionnelles",
+                description: "Informations sur les certifications et débouchés professionnels",
+                criteria: 1,
+                type: "specific",
+                applicableFor: ["certifying"],
+                newEntrant: true
+            },
+
+            // Critère 2: Objectifs et adaptation
+            4: {
+                title: "Analyse du besoin du bénéficiaire",
+                description: "Analyse du besoin en lien avec l'entreprise et/ou le financeur",
+                criteria: 2,
+                type: "mandatory",
+                applicableFor: ["formation", "vae", "cbc", "cfa"]
+            },
+            5: {
+                title: "Objectifs opérationnels et évaluables",
+                description: "Définition d'objectifs spécifiques et mesurables",
+                criteria: 2,
+                type: "mandatory",
+                applicableFor: ["formation", "vae", "cbc", "cfa"]
+            },
+            6: {
+                title: "Contenus et modalités de mise en œuvre",
+                description: "Adaptation des contenus aux objectifs et aux publics",
+                criteria: 2,
+                type: "mandatory",
+                applicableFor: ["formation", "vae", "cbc", "cfa"]
+            },
+            7: {
+                title: "Adéquation aux exigences de certification",
+                description: "Conformité aux référentiels de certification professionnelle",
+                criteria: 2,
+                type: "specific",
+                applicableFor: ["certifying"]
+            },
+            8: {
+                title: "Procédures de positionnement et d'évaluation",
+                description: "Évaluation des acquis à l'entrée de la prestation",
+                criteria: 2,
+                type: "mandatory",
+                applicableFor: ["formation", "vae", "cbc", "cfa"]
+            },
+
+            // Critère 3: Accueil, suivi et évaluation
+            9: {
+                title: "Information sur conditions de déroulement",
+                description: "Information des bénéficiaires sur les modalités de la prestation",
+                criteria: 3,
+                type: "mandatory",
+                applicableFor: ["formation", "vae", "cbc", "cfa"]
+            },
+            10: {
+                title: "Adaptation de la prestation aux publics",
+                description: "Mise en œuvre et adaptation aux besoins des bénéficiaires",
+                criteria: 3,
+                type: "mandatory",
+                applicableFor: ["formation", "vae", "cbc", "cfa"]
+            },
+            11: {
+                title: "Évaluation de l'atteinte des objectifs",
+                description: "Mesure de l'atteinte des objectifs par les bénéficiaires",
+                criteria: 3,
+                type: "mandatory",
+                applicableFor: ["formation", "vae", "cbc", "cfa"],
+                newEntrant: true
+            },
+            12: {
+                title: "Prévention des ruptures de parcours",
+                description: "Mesures pour favoriser l'engagement et prévenir les abandons",
+                criteria: 3,
+                type: "conditional",
+                applicableFor: ["formation"],
+                condition: "longTraining" // Pour formations > 2 jours
+            },
+            13: {
+                title: "Coordination des apprentissages en alternance",
+                description: "Structuration du parcours en alternance",
+                criteria: 3,
+                type: "specific",
+                applicableFor: ["cfa"],
+                newEntrant: true
+            },
+            14: {
+                title: "Accompagnement socioprofessionnel et éducatif",
+                description: "Accompagnement personnalisé des apprenants",
+                criteria: 3,
+                type: "specific",
+                applicableFor: ["cfa"],
+                newEntrant: true
+            },
+            15: {
+                title: "Information sur droits et devoirs",
+                description: "Information des apprentis sur leurs droits et devoirs",
+                criteria: 3,
+                type: "specific",
+                applicableFor: ["cfa"]
+            },
+            16: {
+                title: "Conditions de présentation à la certification",
+                description: "Respect des conditions de présentation aux épreuves",
+                criteria: 3,
+                type: "specific",
+                applicableFor: ["certifying"]
+            },
+
+            // Critère 4: Adéquation des moyens
+            17: {
+                title: "Moyens humains et techniques appropriés",
+                description: "Mise à disposition de ressources adaptées",
+                criteria: 4,
+                type: "mandatory",
+                applicableFor: ["formation", "vae", "cbc", "cfa"]
+            },
+            18: {
+                title: "Mobilisation des intervenants",
+                description: "Coordination des différents intervenants internes/externes",
+                criteria: 4,
+                type: "mandatory",
+                applicableFor: ["formation", "vae", "cbc", "cfa"]
+            },
+            19: {
+                title: "Ressources pédagogiques appropriées",
+                description: "Mise à disposition et appropriation des ressources",
+                criteria: 4,
+                type: "mandatory",
+                applicableFor: ["formation", "vae", "cbc", "cfa"],
+                newEntrant: true
+            },
+            20: {
+                title: "Personnel dédié spécialisé",
+                description: "Personnel dédié à la mobilité, référent handicap, conseil de perfectionnement",
+                criteria: 4,
+                type: "specific",
+                applicableFor: ["cfa"]
+            },
+
+            // Critère 5: Qualification du personnel
+            21: {
+                title: "Compétences des intervenants",
+                description: "Détermination, mobilisation et évaluation des compétences",
+                criteria: 5,
+                type: "mandatory",
+                applicableFor: ["formation", "vae", "cbc", "cfa"]
+            },
+            22: {
+                title: "Développement des compétences du personnel",
+                description: "Entretien et développement des compétences des salariés",
+                criteria: 5,
+                type: "mandatory",
+                applicableFor: ["formation", "vae", "cbc", "cfa"],
+                newEntrant: true
+            },
+
+            // Critère 6: Environnement professionnel
+            23: {
+                title: "Veille légale et réglementaire",
+                description: "Veille sur le champ de la formation professionnelle",
+                criteria: 6,
+                type: "mandatory",
+                applicableFor: ["formation", "vae", "cbc", "cfa"]
+            },
+            24: {
+                title: "Veille sur les évolutions des métiers",
+                description: "Veille sur les compétences, métiers et emplois",
+                criteria: 6,
+                type: "mandatory",
+                applicableFor: ["formation", "vae", "cbc", "cfa"],
+                newEntrant: true
+            },
+            25: {
+                title: "Veille sur les innovations pédagogiques",
+                description: "Veille sur les innovations pédagogiques et technologiques",
+                criteria: 6,
+                type: "mandatory",
+                applicableFor: ["formation", "vae", "cbc", "cfa"],
+                newEntrant: true
+            },
+            26: {
+                title: "Accueil des personnes handicapées",
+                description: "Mobilisation d'expertises et réseaux pour l'accueil des PSH",
+                criteria: 6,
+                type: "mandatory",
+                applicableFor: ["formation", "vae", "cbc", "cfa"],
+                newEntrant: true
+            },
+            27: {
+                title: "Conformité de la sous-traitance",
+                description: "Respect de la conformité Qualiopi par les sous-traitants",
+                criteria: 6,
+                type: "conditional",
+                applicableFor: ["formation", "vae", "cbc", "cfa"],
+                condition: "usesSoustraitance"
+            },
+            28: {
+                title: "Formations en situation de travail",
+                description: "Périodes de formations en situation de travail (AFEST)",
+                criteria: 6,
+                type: "specific",
+                applicableFor: ["afest"]
+            },
+            29: {
+                title: "Actions d'insertion professionnelle",
+                description: "Actions favorisant l'insertion professionnelle ou poursuite d'études",
+                criteria: 6,
+                type: "specific",
+                applicableFor: ["cfa"]
+            },
+
+            // Critère 7: Amélioration continue
+            30: {
+                title: "Recueil des appréciations",
+                description: "Recueil des appréciations des parties prenantes",
+                criteria: 7,
+                type: "mandatory",
+                applicableFor: ["formation", "vae", "cbc", "cfa"]
+            },
+            31: {
+                title: "Traitement des réclamations",
+                description: "Modalités de traitement des difficultés et réclamations",
+                criteria: 7,
+                type: "mandatory",
+                applicableFor: ["formation", "vae", "cbc", "cfa"]
+            },
+            32: {
+                title: "Mesures d'amélioration",
+                description: "Mise en œuvre de mesures d'amélioration continue",
+                criteria: 7,
+                type: "mandatory",
+                applicableFor: ["formation", "vae", "cbc", "cfa"],
+                newEntrant: true
+            }
+        };
+
+        const CRITERIA_NAMES = {
+            1: "Information au public",
+            2: "Objectifs et adaptation des prestations", 
+            3: "Accueil, suivi et évaluation du public",
+            4: "Adéquation des moyens pédagogiques",
+            5: "Qualification et développement du personnel",
+            6: "Investissement dans l'environnement professionnel",
+            7: "Recueil des appréciations et amélioration continue"
+        };
+
+        // Application state
+        let organizationData = {};
+        let indicatorProgress = {};
+        let applicableIndicators = [];
+
+        // Load organization data and determine applicable indicators
+        function loadOrganizationData() {
+            try {
+                const savedData = localStorage.getItem('qualiopi_organization_data');
+                if (savedData) {
+                    organizationData = JSON.parse(savedData);
+                    console.log('📊 Organization data loaded:', organizationData);
+                    return true;
+                }
+            } catch (error) {
+                console.error('Error loading organization data:', error);
+            }
+            return false;
+        }
+
+        // Determine which indicators are applicable based on organization data
+        function determineApplicableIndicators() {
+            if (!organizationData.activities || organizationData.activities.length === 0) {
+                return [];
+            }
+
+            const applicable = [];
+            
+            Object.entries(QUALIOPI_INDICATORS).forEach(([number, indicator]) => {
+                let isApplicable = false;
+
+                // Check if indicator applies to organization's activities
+                const hasMatchingActivity = indicator.applicableFor.some(activity => {
+                    if (activity === "formation") return organizationData.activities.includes("formation");
+                    if (activity === "vae") return organizationData.activities.includes("vae");
+                    if (activity === "cbc") return organizationData.activities.includes("cbc");
+                    if (activity === "cfa") return organizationData.activities.includes("cfa");
+                    if (activity === "certifying") return organizationData.certifying?.includes("yes");
+                    if (activity === "afest") return false; // AFEST not in current questionnaire
+                    return false;
+                });
+
+                if (hasMatchingActivity) {
+                    // Check conditional indicators
+                    if (indicator.condition) {
+                        if (indicator.condition === "usesSoustraitance") {
+                            isApplicable = organizationData.usesSoustraitance === "yes";
+                        } else if (indicator.condition === "longTraining") {
+                            isApplicable = organizationData.trainingDuration !== "short";
+                        }
+                    } else {
+                        isApplicable = true;
+                    }
+                }
+
+                if (isApplicable) {
+                    applicable.push({
+                        number: parseInt(number),
+                        ...indicator,
+                        isNewEntrant: organizationData.isNewEntrant === "yes" && indicator.newEntrant
+                    });
+                }
+            });
+
+            // Sort by indicator number
+            return applicable.sort((a, b) => a.number - b.number);
+        }
+
+        // Load indicator progress
+        function loadIndicatorProgress() {
+            try {
+                const saved = localStorage.getItem('qualiopi_indicator_progress');
+                if (saved) {
+                    indicatorProgress = JSON.parse(saved);
+                } else {
+                    // Initialize progress for all applicable indicators
+                    applicableIndicators.forEach(indicator => {
+                        if (!indicatorProgress[indicator.number]) {
+                            indicatorProgress[indicator.number] = {
+                                status: 'not-started', // not-started, in-progress, completed
+                                completedSteps: 0,
+                                totalSteps: 5, // Default, will be updated by individual indicator pages
+                                lastUpdated: null
+                            };
+                        }
+                    });
+                }
+            } catch (error) {
+                console.error('Error loading indicator progress:', error);
+            }
+        }
+
+        // Save indicator progress
+        function saveIndicatorProgress() {
+            try {
+                localStorage.setItem('qualiopi_indicator_progress', JSON.stringify(indicatorProgress));
+            } catch (error) {
+                console.error('Error saving indicator progress:', error);
+            }
+        }
+
+        // Get indicator status
+        function getIndicatorStatus(indicatorNumber) {
+            const progress = indicatorProgress[indicatorNumber];
+            if (!progress) return 'not-started';
+            return progress.status;
+        }
+
+        // Get indicator progress percentage
+        function getIndicatorProgress(indicatorNumber) {
+            const progress = indicatorProgress[indicatorNumber];
+            if (!progress || progress.totalSteps === 0) return 0;
+            return Math.round((progress.completedSteps / progress.totalSteps) * 100);
+        }
+
+        // Update overall progress statistics
+        function updateProgressStats() {
+            const total = applicableIndicators.length;
+            let completed = 0;
+            let inProgress = 0;
+            let notStarted = 0;
+
+            applicableIndicators.forEach(indicator => {
+                const status = getIndicatorStatus(indicator.number);
+                if (status === 'completed') completed++;
+                else if (status === 'in-progress') inProgress++;
+                else notStarted++;
+            });
+
+            document.getElementById('total-indicators').textContent = total;
+            document.getElementById('completed-indicators').textContent = completed;
+            document.getElementById('in-progress-indicators').textContent = inProgress;
+            document.getElementById('not-started-indicators').textContent = notStarted;
+        }
+
+        // Generate criteria sections
+        function generateCriteriaSections() {
+            const container = document.getElementById('criteria-container');
+            
+            // Group indicators by criteria
+            const criteriaGroups = {};
+            applicableIndicators.forEach(indicator => {
+                if (!criteriaGroups[indicator.criteria]) {
+                    criteriaGroups[indicator.criteria] = [];
+                }
+                criteriaGroups[indicator.criteria].push(indicator);
+            });
+
+            // Generate HTML for each criteria
+            Object.entries(criteriaGroups).forEach(([criteriaNumber, indicators]) => {
+                const criteriaSection = document.createElement('div');
+                criteriaSection.className = 'criteria-section';
+                
+                const completed = indicators.filter(ind => getIndicatorStatus(ind.number) === 'completed').length;
+                const total = indicators.length;
+
+                criteriaSection.innerHTML = `
+                    <div class="criteria-header">
+                        <h3>Critère ${criteriaNumber} : ${CRITERIA_NAMES[criteriaNumber]}</h3>
+                        <p>${indicators.length} indicateur${indicators.length > 1 ? 's' : ''} applicable${indicators.length > 1 ? 's' : ''}</p>
+                        <div class="criteria-progress">${completed}/${total} terminé${completed > 1 ? 's' : ''}</div>
+                    </div>
+                    <div class="indicators-grid">
+                        ${indicators.map(indicator => generateIndicatorCard(indicator)).join('')}
+                    </div>
+                `;
+                
+                container.appendChild(criteriaSection);
+            });
+        }
+
+        // Generate individual indicator card
+        function generateIndicatorCard(indicator) {
+            const status = getIndicatorStatus(indicator.number);
+            const progress = getIndicatorProgress(indicator.number);
+            
+            let statusIcon = '';
+            let statusClass = status;
+            
+            if (status === 'completed') statusIcon = '✓';
+            else if (status === 'in-progress') statusIcon = '●';
+            else statusIcon = '○';
+
+            let typeLabel = 'Socle';
+            let typeClass = 'mandatory';
+            
+            if (indicator.type === 'specific') {
+                typeLabel = 'Spécifique';
+                typeClass = 'specific';
+            } else if (indicator.isNewEntrant) {
+                typeLabel = 'Nouvel entrant';
+                typeClass = 'new-entrant';
+            }
+
+            return `
+                <div class="indicator-card">
+                    <div class="indicator-header">
+                        <div class="indicator-number">Indicateur ${indicator.number}</div>
+                        <div class="status-indicator ${statusClass}">${statusIcon}</div>
+                    </div>
+                    <div class="indicator-title">${indicator.title}</div>
+                    <div class="indicator-description">${indicator.description}</div>
+                    <div class="indicator-meta">
+                        <div class="indicator-type ${typeClass}">${typeLabel}</div>
+                        <div class="indicator-progress">${progress}%</div>
+                    </div>
+                    <button class="indicator-button" onclick="openIndicatorPage(${indicator.number})">
+                        📋 Préparer cet indicateur
+                    </button>
+                </div>
+            `;
+        }
+
+        // Open individual indicator page
+        function openIndicatorPage(indicatorNumber) {
+            // For now, show an alert. Later we'll create individual indicator pages
+            const indicator = QUALIOPI_INDICATORS[indicatorNumber];
+            alert(`🚧 Page en construction\n\nIndicateur ${indicatorNumber}: ${indicator.title}\n\nCette page sera créée prochainement avec le guide détaillé pour préparer cet indicateur.`);
+            
+            // TODO: Navigate to indicateur-X.html
+            // window.location.href = `indicateur-${indicatorNumber}.html`;
+        }
+
+        // Load dates from main app
+        function loadDates() {
+            try {
+                const planningData = localStorage.getItem('qualiopi_planning_data');
+                if (planningData) {
+                    const data = JSON.parse(planningData);
+                    if (data.timeline) {
+                        const auditPrepTask = data.timeline.find(item => item.taskId === 'preparation-audit-initial');
+                        if (auditPrepTask) {
+                            document.getElementById('start-date').textContent = formatDate(new Date(auditPrepTask.startDate));
+                            document.getElementById('end-date').textContent = formatDate(new Date(auditPrepTask.endDate));
+                        }
+                    }
+                }
+            } catch (error) {
+                console.log('Could not load dates from main app');
+            }
+        }
+
+        // Format date
+        function formatDate(date) {
+            return date.toLocaleDateString('fr-FR', {
+                day: 'numeric',
+                month: 'long',
+                year: 'numeric'
+            });
+        }
+
+        // Initialize page
+        function initializePage() {
+            console.log('🎯 Initializing Preparation Audit Initial page...');
+            
+            // Show loading state
+            document.getElementById('loading-state').style.display = 'block';
+            document.getElementById('no-data-message').style.display = 'none';
+            
+            setTimeout(() => {
+                // Load organization data
+                const hasData = loadOrganizationData();
+                
+                if (!hasData) {
+                    // Show no data message
+                    document.getElementById('loading-state').style.display = 'none';
+                    document.getElementById('no-data-message').style.display = 'block';
+                    return;
+                }
+
+                // Determine applicable indicators
+                applicableIndicators = determineApplicableIndicators();
+                console.log('📋 Applicable indicators:', applicableIndicators.length);
+
+                if (applicableIndicators.length === 0) {
+                    document.getElementById('loading-state').style.display = 'none';
+                    document.getElementById('no-data-message').style.display = 'block';
+                    return;
+                }
+
+                // Load progress and generate content
+                loadIndicatorProgress();
+                updateProgressStats();
+                generateCriteriaSections();
+                loadDates();
+
+                // Hide loading state
+                document.getElementById('loading-state').style.display = 'none';
+                
+                console.log('✅ Page initialized successfully');
+            }, 1000); // Simulate loading time
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', initializePage);
+    </script>
+</body>
+</html>
