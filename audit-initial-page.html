@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audit Initial - Guide Qualiopi</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            color: white;
+            padding: 40px 20px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            animation: fadeInDown 0.8s ease;
+        }
+
+        header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            animation: fadeInUp 0.8s ease;
+        }
+
+        .back-button {
+            display: inline-block;
+            margin-bottom: 20px;
+            padding: 10px 20px;
+            background-color: #6366f1;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+        }
+
+        .back-button:hover {
+            background-color: #4f46e5;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
+        }
+
+        .section {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            animation: fadeIn 0.6s ease;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            color: #6366f1;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #e5e7eb;
+        }
+
+        .checklist-item {
+            background-color: #f9fafb;
+            border: 2px solid #e5e7eb;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 15px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            padding-left: 60px;
+        }
+
+        .checklist-item:hover {
+            border-color: #6366f1;
+            box-shadow: 0 5px 15px rgba(99, 102, 241, 0.1);
+            transform: translateX(5px);
+        }
+
+        .checklist-item.checked {
+            background-color: #f0fdf4;
+            border-color: #22c55e;
+        }
+
+        .checkbox-circle {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 24px;
+            height: 24px;
+            border: 2px solid #d1d5db;
+            border-radius: 50%;
+            background-color: white;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .checklist-item.checked .checkbox-circle {
+            background-color: #22c55e;
+            border-color: #22c55e;
+        }
+
+        .checkbox-circle::after {
+            content: '✓';
+            color: white;
+            font-size: 14px;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+
+        .checklist-item.checked .checkbox-circle::after {
+            opacity: 1;
+        }
+
+        .checklist-title {
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 8px;
+            font-size: 1.1rem;
+        }
+
+        .checklist-description {
+            color: #6b7280;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .audit-blanc-container {
+            margin-top: 40px;
+        }
+
+        .sandbox-area {
+            background-color: #fefce8;
+            border: 2px solid #facc15;
+            border-radius: 10px;
+            padding: 30px;
+            margin-top: 20px;
+        }
+
+        .question-card {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .question-card:hover {
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .question-number {
+            background-color: #6366f1;
+            color: white;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .question-text {
+            font-size: 1.1rem;
+            color: #1f2937;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+
+        .answer-area {
+            width: 100%;
+            min-height: 120px;
+            padding: 15px;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 1rem;
+            resize: vertical;
+            transition: border-color 0.3s ease;
+            font-family: inherit;
+        }
+
+        .answer-area:focus {
+            outline: none;
+            border-color: #6366f1;
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+        }
+
+        .hint-box {
+            background-color: #eff6ff;
+            border-left: 4px solid #3b82f6;
+            padding: 15px;
+            margin-top: 15px;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .hint-box h4 {
+            color: #3b82f6;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .hint-box p {
+            color: #64748b;
+            font-size: 0.95rem;
+            margin: 0;
+        }
+
+        .progress-bar {
+            background-color: #e5e7eb;
+            height: 8px;
+            border-radius: 4px;
+            margin: 30px 0;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            background: linear-gradient(90deg, #6366f1, #8b5cf6);
+            height: 100%;
+            width: 0%;
+            transition: width 0.5s ease;
+            border-radius: 4px;
+        }
+
+        .save-button {
+            background-color: #22c55e;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 1.1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: block;
+            margin: 30px auto;
+            box-shadow: 0 4px 15px rgba(34, 197, 94, 0.3);
+        }
+
+        .save-button:hover {
+            background-color: #16a34a;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(34, 197, 94, 0.4);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .info-alert {
+            background-color: #dbeafe;
+            border: 1px solid #3b82f6;
+            color: #1e40af;
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .info-icon {
+            font-size: 24px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+
+            header h1 {
+                font-size: 2rem;
+            }
+
+            .section {
+                padding: 20px;
+            }
+
+            .checklist-item {
+                padding-left: 50px;
+            }
+
+            .checkbox-circle {
+                left: 15px;
+                width: 20px;
+                height: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="back-button">← Retour à la timeline</a>
+        
+        <header>
+            <h1>Préparation à l'Audit Initial</h1>
+            <p>Checklist complète et simulation d'audit pour votre préparation</p>
+        </header>
+
+        <section class="section">
+            <h2 class="section-title">📋 Checklist des éléments à préparer</h2>
+            
+            <div class="info-alert">
+                <span class="info-icon">ℹ️</span>
+                <div>
+                    <strong>Important :</strong> L'auditeur peut demander la transmission de tout ou partie de ces informations au plus tard 10 jours avant l'audit. L'absence de preuve le jour de l'audit entraîne une non-conformité.
+                </div>
+            </div>
+
+            <div class="checklist-item" onclick="toggleCheck(this)">
+                <div class="checkbox-circle"></div>
+                <div class="checklist-title">Documents administratifs</div>
+                <div class="checklist-description">
+                    Extrait Kbis actualisé, avis INSEE, Numéro de Déclaration d'Activité (NDA), dernier Bilan Pédagogique et Financier (BPF), organigramme nominatif et fonctionnel
+                </div>
+            </div>
+
+            <div class="checklist-item" onclick="toggleCheck(this)">
+                <div class="checkbox-circle"></div>
+                <div class="checklist-title">Indicateur 1 : Information au public</div>
+                <div class="checklist-description">
+                    Support de communication détaillant vos prestations (site web, plaquette, réseaux sociaux) avec prérequis, objectifs, durée, modalités, tarifs et accessibilité PSH
+                </div>
+            </div>
+
+            <div class="checklist-item" onclick="toggleCheck(this)">
+                <div class="checkbox-circle"></div>
+                <div class="checklist-title">Indicateur 2 : Indicateurs de résultats</div>
+                <div class="checklist-description">
+                    Au moins 2 indicateurs chiffrés par formation (taux de satisfaction, nombre d'apprenants, taux de recommandation) avec outils de mesure justificatifs
+                </div>
+            </div>
+
+            <div class="checklist-item" onclick="toggleCheck(this)">
+                <div class="checkbox-circle"></div>
+                <div class="checklist-title">Processus d'accueil et d'intégration</div>
+                <div class="checklist-description">
+                    Procédures d'inscription, livret d'accueil, règlement intérieur, convocations types, feuilles d'émargement
+                </div>
+            </div>
+
+            <div class="checklist-item" onclick="toggleCheck(this)">
+                <div class="checkbox-circle"></div>
+                <div class="checklist-title">Analyse des besoins et personnalisation</div>
+                <div class="checklist-description">
+                    Processus d'analyse des besoins, tests de positionnement, programmes personnalisés, modalités d'adaptation
+                </div>
+            </div>
+
+            <div class="checklist-item" onclick="toggleCheck(this)">
+                <div class="checkbox-circle"></div>
+                <div class="checklist-title">Dispositifs d'évaluation</div>
+                <div class="checklist-description">
+                    Grilles d'évaluation, questionnaires de satisfaction, processus de certification des acquis, bilans de formation
+                </div>
+            </div>
+
+            <div class="checklist-item" onclick="toggleCheck(this)">
+                <div class="checkbox-circle"></div>
+                <div class="checklist-title">Qualification du personnel</div>
+                <div class="checklist-description">
+                    CV des formateurs, diplômes, attestations de formation continue, plan de développement des compétences
+                </div>
+            </div>
+
+            <div class="checklist-item" onclick="toggleCheck(this)">
+                <div class="checkbox-circle"></div>
+                <div class="checklist-title">Ressources pédagogiques</div>
+                <div class="checklist-description">
+                    Supports de cours actualisés, ressources documentaires, outils pédagogiques, plateformes e-learning
+                </div>
+            </div>
+
+            <div class="checklist-item" onclick="toggleCheck(this)">
+                <div class="checkbox-circle"></div>
+                <div class="checklist-title">Veille réglementaire et pédagogique</div>
+                <div class="checklist-description">
+                    Processus de veille légale et réglementaire, veille sur les évolutions des compétences/métiers, veille pédagogique et technologique
+                </div>
+            </div>
+
+            <div class="checklist-item" onclick="toggleCheck(this)">
+                <div class="checkbox-circle"></div>
+                <div class="checklist-title">Accessibilité PSH</div>
+                <div class="checklist-description">
+                    Référent handicap désigné, processus d'accueil PSH, partenariats (Agefiph, Cap emploi), adaptations pédagogiques
+                </div>
+            </div>
+
+            <div class="checklist-item" onclick="toggleCheck(this)">
+                <div class="checkbox-circle"></div>
+                <div class="checklist-title">Amélioration continue</div>
+                <div class="checklist-description">
+                    Processus de traitement des réclamations, plans d'action correctifs, comptes-rendus de réunions qualité, indicateurs de performance
+                </div>
+            </div>
+
+            <div class="checklist-item" onclick="toggleCheck(this)">
+                <div class="checkbox-circle"></div>
+                <div class="checklist-title">Sous-traitance (si applicable)</div>
+                <div class="checklist-description">
+                    Contrats de sous-traitance, processus de sélection et évaluation, preuves de conformité Qualiopi des sous-traitants
+                </div>
+            </div>
+        </section>
+
+        <section class="section audit-blanc-container">
+            <h2 class="section-title">🎯 Audit Blanc - Simulation des questions de l'auditeur</h2>
+            
+            <div class="sandbox-area">
+                <p style="margin-bottom: 20px; font-weight: 600; color: #92400e;">
+                    Entraînez-vous à répondre aux questions types que pourrait poser l'auditeur. 
+                    Vos réponses sont sauvegardées automatiquement dans votre navigateur.
+                </p>
+
+                <div class="question-card">
+                    <div class="question-number">1</div>
+                    <div class="question-text">
+                        "Pouvez-vous me présenter votre taux de satisfaction global et m'expliquer comment vous le calculez ?"
+                    </div>
+                    <textarea class="answer-area" placeholder="Tapez votre réponse ici..." 
+                              oninput="saveAnswer(1, this.value); updateProgress()"></textarea>
+                    <div class="hint-box">
+                        <h4>Conseil</h4>
+                        <p>Mentionnez le taux exact, la période de calcul, la méthode (questionnaires), le nombre de répondants et les actions d'amélioration mises en place.</p>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <div class="question-number">2</div>
+                    <div class="question-text">
+                        "Comment analysez-vous les besoins spécifiques de vos apprenants avant la formation ?"
+                    </div>
+                    <textarea class="answer-area" placeholder="Tapez votre réponse ici..." 
+                              oninput="saveAnswer(2, this.value); updateProgress()"></textarea>
+                    <div class="hint-box">
+                        <h4>Conseil</h4>
+                        <p>Détaillez votre processus : entretien préalable, questionnaire de positionnement, analyse des prérequis, adaptation du programme.</p>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <div class="question-number">3</div>
+                    <div class="question-text">
+                        "Montrez-moi comment vous assurez l'accessibilité de vos formations aux personnes en situation de handicap."
+                    </div>
+                    <textarea class="answer-area" placeholder="Tapez votre réponse ici..." 
+                              oninput="saveAnswer(3, this.value); updateProgress()"></textarea>
+                    <div class="hint-box">
+                        <h4>Conseil</h4>
+                        <p>Présentez votre référent handicap, les partenariats établis, les aménagements possibles et des exemples concrets d'adaptation.</p>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <div class="question-number">4</div>
+                    <div class="question-text">
+                        "Comment organisez-vous votre veille réglementaire et pédagogique ?"
+                    </div>
+                    <textarea class="answer-area" placeholder="Tapez votre réponse ici..." 
+                              oninput="saveAnswer(4, this.value); updateProgress()"></textarea>
+                    <div class="hint-box">
+                        <h4>Conseil</h4>
+                        <p>Décrivez vos sources d'information, la fréquence de veille, les responsables désignés et comment vous intégrez les évolutions dans vos formations.</p>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <div class="question-number">5</div>
+                    <div class="question-text">
+                        "Présentez-moi votre processus de traitement des réclamations et d'amélioration continue."
+                    </div>
+                    <textarea class="answer-area" placeholder="Tapez votre réponse ici..." 
+                              oninput="saveAnswer(5, this.value); updateProgress()"></textarea>
+                    <div class="hint-box">
+                        <h4>Conseil</h4>
+                        <p>Expliquez le circuit de remontée des réclamations, les délais de traitement, les responsables et donnez des exemples d'améliorations mises en place.</p>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <div class="question-number">6</div>
+                    <div class="question-text">
+                        "Comment garantissez-vous la qualification et la montée en compétences de vos formateurs ?"
+                    </div>
+                    <textarea class="answer-area" placeholder="Tapez votre réponse ici..." 
+                              oninput="saveAnswer(6, this.value); updateProgress()"></textarea>
+                    <div class="hint-box">
+                        <h4>Conseil</h4>
+                        <p>Présentez votre processus de recrutement, les critères de sélection, le plan de développement des compétences et les formations continues suivies.</p>
+                    </div>
+                </div>
+
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progress"></div>
+                </div>
+
+                <button class="save-button" onclick="exportAnswers()">
+                    💾 Exporter mes réponses
+                </button>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // Fonction pour basculer l'état des checkbox
+        function toggleCheck(element) {
+            element.classList.toggle('checked');
+            saveChecklistState();
+        }
+
+        // Sauvegarde l'état de la checklist
+        function saveChecklistState() {
+            const checkedItems = [];
+            document.querySelectorAll('.checklist-item.checked').forEach((item, index) => {
+                checkedItems.push(index);
+            });
+            localStorage.setItem('qualiopi_checklist', JSON.stringify(checkedItems));
+        }
+
+        // Restaure l'état de la checklist
+        function restoreChecklistState() {
+            const saved = localStorage.getItem('qualiopi_checklist');
+            if (saved) {
+                const checkedItems = JSON.parse(saved);
+                const allItems = document.querySelectorAll('.checklist-item');
+                checkedItems.forEach(index => {
+                    if (allItems[index]) {
+                        allItems[index].classList.add('checked');
+                    }
+                });
+            }
+        }
+
+        // Sauvegarde une réponse
+        function saveAnswer(questionNumber, answer) {
+            const answers = JSON.parse(localStorage.getItem('qualiopi_audit_answers') || '{}');
+            answers[`question_${questionNumber}`] = answer;
+            localStorage.setItem('qualiopi_audit_answers', JSON.stringify(answers));
+        }
+
+        // Restaure les réponses
+        function restoreAnswers() {
+            const answers = JSON.parse(localStorage.getItem('qualiopi_audit_answers') || '{}');
+            document.querySelectorAll('.answer-area').forEach((textarea, index) => {
+                const questionNumber = index + 1;
+                const savedAnswer = answers[`question_${questionNumber}`];
+                if (savedAnswer) {
+                    textarea.value = savedAnswer;
+                }
+            });
+            updateProgress();
+        }
+
+        // Met à jour la barre de progression
+        function updateProgress() {
+            const totalQuestions = document.querySelectorAll('.answer-area').length;
+            let answeredQuestions = 0;
+            
+            document.querySelectorAll('.answer-area').forEach(textarea => {
+                if (textarea.value.trim().length > 0) {
+                    answeredQuestions++;
+                }
+            });
+            
+            const progressPercentage = (answeredQuestions / totalQuestions) * 100;
+            document.getElementById('progress').style.width = progressPercentage + '%';
+        }
+
+        // Exporte les réponses
+        function exportAnswers() {
+            const answers = JSON.parse(localStorage.getItem('qualiopi_audit_answers') || '{}');
+            const checklist = JSON.parse(localStorage.getItem('qualiopi_checklist') || '[]');
+            
+            let content = "AUDIT BLANC QUALIOPI - EXPORT DES RÉPONSES\n";
+            content += "Date : " + new Date().toLocaleDateString('fr-FR') + "\n\n";
+            
+            content += "CHECKLIST :\n";
+            const checklistItems = document.querySelectorAll('.checklist-item');
+            checklistItems.forEach((item, index) => {
+                const title = item.querySelector('.checklist-title').textContent;
+                const isChecked = checklist.includes(index) ? "✓" : "✗";
+                content += `${isChecked} ${title}\n`;
+            });
+            
+            content += "\n\nRÉPONSES AUX QUESTIONS :\n\n";
+            
+            const questions = [
+                "Taux de satisfaction et méthode de calcul",
+                "Analyse des besoins des apprenants",
+                "Accessibilité PSH",
+                "Veille réglementaire et pédagogique",
+                "Traitement des réclamations",
+                "Qualification des formateurs"
+            ];
+            
+            questions.forEach((question, index) => {
+                const answer = answers[`question_${index + 1}`] || "Pas de réponse";
+                content += `Question ${index + 1} : ${question}\n`;
+                content += `Réponse : ${answer}\n\n`;
+            });
+            
+            // Créer et télécharger le fichier
+            const blob = new Blob([content], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'audit_blanc_qualiopi_' + new Date().toISOString().split('T')[0] + '.txt';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            
+            alert('Vos réponses ont été exportées avec succès !');
+        }
+
+        // Initialisation au chargement de la page
+        window.onload = function() {
+            restoreChecklistState();
+            restoreAnswers();
+        };
+    </script>
+</body>
+</html>
