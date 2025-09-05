@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Certification Obtenue - Qualiopi</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+            color: white;
+            padding: 40px 30px;
+            text-align: center;
+            position: relative;
+        }
+
+        .header::before {
+            content: '🎉';
+            font-size: 4rem;
+            position: absolute;
+            top: 20px;
+            left: 30px;
+            opacity: 0.3;
+        }
+
+        .header::after {
+            content: '🏆';
+            font-size: 4rem;
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            opacity: 0.3;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .content {
+            padding: 40px 30px;
+        }
+
+        .congratulations {
+            background: linear-gradient(135deg, #e8f5e8 0%, #f0f8f0 100%);
+            border-left: 5px solid #4CAF50;
+            padding: 30px;
+            margin-bottom: 40px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .congratulations h2 {
+            color: #2e7d32;
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+        }
+
+        .congratulations p {
+            font-size: 1.1rem;
+            color: #388e3c;
+            line-height: 1.8;
+        }
+
+        .info-section {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 10px;
+            padding: 30px;
+            margin-top: 30px;
+        }
+
+        .info-section h3 {
+            color: #856404;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .info-section h3::before {
+            content: '⚠️';
+            font-size: 1.2rem;
+        }
+
+        .non-conformity-type {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-left: 4px solid #ff9800;
+        }
+
+        .non-conformity-type h4 {
+            color: #e65100;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+
+        .non-conformity-type.minor {
+            border-left-color: #ff9800;
+        }
+
+        .non-conformity-type.major {
+            border-left-color: #f44336;
+        }
+
+        .non-conformity-type.major h4 {
+            color: #c62828;
+        }
+
+        .definition {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            font-style: italic;
+        }
+
+        .timeline {
+            background: #e3f2fd;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
+
+        .timeline h5 {
+            color: #1976d2;
+            margin-bottom: 10px;
+        }
+
+        .timeline ul {
+            margin-left: 20px;
+        }
+
+        .timeline li {
+            margin-bottom: 5px;
+            color: #424242;
+        }
+
+        .consequences {
+            background: #ffebee;
+            border: 1px solid #ffcdd2;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .consequences h4 {
+            color: #c62828;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .consequences h4::before {
+            content: '🚨';
+        }
+
+        .important-note {
+            background: #e1f5fe;
+            border: 1px solid #81d4fa;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .important-note h4 {
+            color: #0277bd;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .important-note h4::before {
+            content: 'ℹ️';
+        }
+
+        .back-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 12px 25px;
+            text-decoration: none;
+            border-radius: 25px;
+            margin-top: 30px;
+            transition: transform 0.3s ease;
+            font-weight: 600;
+        }
+
+        .back-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .highlight {
+            background: #fff59d;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                margin: 10px;
+                border-radius: 10px;
+            }
+            
+            .header {
+                padding: 30px 20px;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .content {
+                padding: 30px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Félicitations !</h1>
+            <p>Audit initial réussi</p>
+        </div>
+        
+        <div class="content">
+            <div class="congratulations">
+                <h2>🎊 Bravo, vous avez passé l'audit initial ! 🎊</h2>
+                <p>
+                    Votre organisme de formation a démontré sa conformité aux exigences du référentiel Qualiopi lors de l'audit initial.
+                    <br><br>
+                    <strong>Plus qu'à attendre le retour de l'organisme certificateur pour l'obtention officielle de votre certification !</strong>
+                </p>
+            </div>
+
+            <div class="info-section">
+                <h3>Que faire si j'ai des non-conformités majeures ou mineures ?</h3>
+                
+                <div class="non-conformity-type minor">
+                    <h4>📋 Non-conformité mineure</h4>
+                    
+                    <div class="definition">
+                        <strong>Définition :</strong> Prise en compte partielle de l'indicateur qui ne remet pas en cause la qualité de la prestation délivrée.
+                    </div>
+                    
+                    <div class="timeline">
+                        <h5>⏰ Délais à respecter :</h5>
+                        <ul>
+                            <li><span class="highlight">3 mois</span> pour communiquer votre plan d'action et obtenir la validation</li>
+                            <li><span class="highlight">6 mois</span> à dater de l'audit pour mettre en œuvre les actions</li>
+                        </ul>
+                    </div>
+                    
+                    <div style="background: #fff8e1; padding: 15px; border-radius: 5px; border-left: 3px solid #ffb74d;">
+                        <strong>⚠️ Attention :</strong> Si la non-conformité n'est pas levée lors de l'audit de surveillance, elle sera requalifiée en non-conformité majeure. De plus, <span class="highlight">5 non-conformités mineures non soldées constituent une non-conformité majeure</span>.
+                    </div>
+                </div>
+
+                <div class="non-conformity-type major">
+                    <h4>🚫 Non-conformité majeure</h4>
+                    
+                    <div class="definition">
+                        <strong>Définition :</strong> Non-prise en compte d'un indicateur ou sa prise en compte partielle remettant en cause la qualité de la prestation délivrée.
+                    </div>
+                    
+                    <div class="timeline">
+                        <h5>⏰ Délais à respecter :</h5>
+                        <ul>
+                            <li><span class="highlight">3 mois</span> pour la vérification de l'efficacité des actions correctives</li>
+                            <li><span class="highlight">30 jours</span> seulement si la non-conformité concerne la charte graphique et le règlement d'usage de la marque Qualiopi</li>
+                        </ul>
+                    </div>
+                    
+                    <div style="background: #fce4ec; padding: 15px; border-radius: 5px; border-left: 3px solid #e91e63;">
+                        <strong>📝 À savoir :</strong> Certains indicateurs ne peuvent donner lieu qu'à des non-conformités majeures (indicateurs 4, 5, 6, 7, 10, 11, 14, 15, 16, 20, 21, 22, 26, 27, 29, 31 et 32).
+                    </div>
+                </div>
+
+                <div class="consequences">
+                    <h4>Conséquences en cas de non-traitement</h4>
+                    <ul style="margin-left: 20px;">
+                        <li><strong>Non-conformité majeure non levée dans les 3 mois :</strong> Suspension de la certification</li>
+                        <li><strong>Actions correctives non mises en œuvre dans les 3 mois après suspension :</strong> Retrait de la certification ou non-octroi</li>
+                        <li><strong>En cas de retrait :</strong> Nécessité de réaliser un nouvel audit initial après un délai de carence</li>
+                    </ul>
+                </div>
+
+                <div class="important-note">
+                    <h4>Informations importantes</h4>
+                    <ul style="margin-left: 20px;">
+                        <li><strong>Transmission des réponses :</strong> Les réponses aux non-conformités doivent être transmises via l'espace MyQUALIANOR de votre organisme certificateur</li>
+                        <li><strong>Droit d'appel :</strong> En cas de désaccord avec l'auditeur, vous pouvez faire appel. Les informations relatives au traitement des plaintes et des appels sont accessibles sur simple demande</li>
+                        <li><strong>Importance du suivi :</strong> Un traitement inapproprié des non-conformités peut entraîner le refus ou la suspension de la certification</li>
+                    </ul>
+                </div>
+            </div>
+
+            <a href="#" class="back-button" onclick="history.back()">← Retour à la timeline</a>
+        </div>
+    </div>
+
+    <script>
+        // Animation d'entrée pour les éléments
+        document.addEventListener('DOMContentLoaded', function() {
+            const elements = document.querySelectorAll('.congratulations, .info-section, .non-conformity-type');
+            elements.forEach((element, index) => {
+                element.style.opacity = '0';
+                element.style.transform = 'translateY(20px)';
+                element.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                
+                setTimeout(() => {
+                    element.style.opacity = '1';
+                    element.style.transform = 'translateY(0)';
+                }, index * 200);
+            });
+        });
+    </script>
+</body>
+</html>
