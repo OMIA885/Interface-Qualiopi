@@ -531,29 +531,46 @@
                     link: ""
                 }
             ];
-
             milestones.forEach(milestone => {
-                const milestoneDate = new Date(targetDate);
-                milestoneDate.setDate(milestoneDate.getDate() - milestone.daysBeforeTarget);
-                timeline.push({
-                    ...milestone,
-                    date: milestoneDate,
-                    status: getTimelineStatus(milestoneDate, milestone.duration)
-                });
+              // start = date de début
+              const start = new Date(targetDate);
+              start.setDate(start.getDate() - milestone.daysBeforeTarget);
+            
+              // end = date de fin
+              const end = new Date(start);
+              end.setDate(end.getDate() + milestone.duration);
+            
+              // --- Stockage générique (clé dérivée du nom) ---
+              const key = 'ms_' + milestone.name
+                .normalize('NFD').replace(/[\u0300-\u036f]/g, '') // enlève accents
+                .toLowerCase()
+                .replace(/\s+/g, '_'); // espaces -> underscore
+            
+              // ⚠️ astuce anti décalage fuseau : on stocke en AAAA-MM-JJ
+              const startStr = start.toISOString().split('T')[0];
+              const endStr   = end.toISOString().split('T')[0];
+            
+              localStorage.setItem(key, JSON.stringify({ start: startStr, end: endStr }));
+            
+              // --- Pousse dans la timeline (date = start pour ta fonction existante) ---
+              timeline.push({
+                ...milestone,
+                date: start,
+                start,          // dispo si tu veux l'utiliser plus tard
+                end,            // idem
+                status: getTimelineStatus(start, end)
+              });
             });
 
-            displayTimeline(timeline);
-        }
+displayTimeline(timeline);
 
-        function getTimelineStatus(milestoneDate, duration) {
-            const today = new Date();
-            const endDate = new Date(milestoneDate);
-            endDate.setDate(endDate.getDate() + duration);
-
-            if (today > endDate) return 'completed';
-            if (today >= milestoneDate && today <= endDate) return 'current';
-            return 'upcoming';
-        }
+// Maintenant, la fonction ne recalcule plus endDate : elle reçoit start et end
+function getTimelineStatus(start, end) {
+  const today = new Date();
+  if (today > end) return 'completed';
+  if (today >= start && today <= end) return 'current';
+  return 'upcoming';
+}
         
         function displayTimeline(timeline) {
             const container = document.getElementById('timeline');
