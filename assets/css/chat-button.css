@@ -1,0 +1,112 @@
+/* ===== BOUTON CHAT FLOTTANT QUALIOPI ===== */
+/* Fichier: assets/css/chat-button.css */
+
+.chat-float-button {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    z-index: 1000;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.chat-float-button button {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    border-radius: 25px;
+    padding: 15px 25px;
+    font-size: 1em;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+    transition: all 0.3s ease;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.chat-float-button button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 40px rgba(102, 126, 234, 0.4);
+    background: linear-gradient(135deg, #5a6fd8 0%, #6b4491 100%);
+}
+
+.chat-float-button button:active {
+    transform: translateY(-1px);
+}
+
+.chat-float-button svg {
+    flex-shrink: 0;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .chat-float-button {
+        bottom: 20px;
+        right: 20px;
+    }
+    
+    .chat-float-button button {
+        padding: 12px 20px;
+        font-size: 0.9em;
+    }
+    
+    .chat-float-button button span {
+        display: none; /* Cache le texte sur mobile */
+    }
+    
+    .chat-float-button button {
+        border-radius: 50%;
+        width: 60px;
+        height: 60px;
+        padding: 0;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .chat-float-button {
+        bottom: 15px;
+        right: 15px;
+    }
+    
+    .chat-float-button button {
+        width: 55px;
+        height: 55px;
+    }
+}
+
+/* Animation d'entrée */
+.chat-float-button.animate-in {
+    animation: slideInUp 0.5s ease-out;
+}
+
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(100px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Pulse animation pour attirer l'attention (optionnel) */
+.chat-float-button.pulse {
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
