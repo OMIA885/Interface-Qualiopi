@@ -334,6 +334,16 @@
             margin: 0 10px;
         }
 
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+        }
+
         .btn-secondary {
             background: white;
             color: #667eea;
@@ -448,6 +458,7 @@
 
         <div class="action-buttons">
             <a href="index.html" class="btn btn-secondary">← Retour au planning</a>
+            <button class="btn btn-primary" onclick="markAllAsCompleted()">Marquer tout comme prêt</button>
         </div>
     </div>
 
@@ -939,22 +950,50 @@
             // window.location.href = `indicateur-${indicatorNumber}.html`;
         }
 
-        // Load dates from main app
+        // Mark all indicators as completed - FONCTION AJOUTÉE
+        function markAllAsCompleted() {
+            applicableIndicators.forEach(indicator => {
+                indicatorProgress[indicator.number] = {
+                    status: 'completed',
+                    completedSteps: 5,
+                    totalSteps: 5,
+                    lastUpdated: new Date().toISOString()
+                };
+            });
+            
+            saveIndicatorProgress();
+            updateProgressStats();
+            
+            // Update UI to reflect changes
+            generateCriteriaSections();
+            
+            alert('Tous les indicateurs ont été marqués comme prêts pour l\'audit !');
+        }
+
+        // Load dates from localStorage using ms_preparation_audit_initial key
         function loadDates() {
             try {
-                const planningData = localStorage.getItem('qualiopi_planning_data');
-                if (planningData) {
-                    const data = JSON.parse(planningData);
-                    if (data.timeline) {
-                        const auditPrepTask = data.timeline.find(item => item.taskId === 'preparation-audit-initial');
-                        if (auditPrepTask) {
-                            document.getElementById('start-date').textContent = formatDate(new Date(auditPrepTask.startDate));
-                            document.getElementById('end-date').textContent = formatDate(new Date(auditPrepTask.endDate));
-                        }
-                    }
+                const data = JSON.parse(localStorage.getItem('ms_preparation_audit_initial') || 'null');
+                const startEl = document.getElementById('start-date');
+                const endEl = document.getElementById('end-date');
+
+                function formatFR(yyyy_mm_dd) {
+                    if (!yyyy_mm_dd) return 'À définir';
+                    const [y, m, d] = yyyy_mm_dd.split('-').map(Number);
+                    return new Date(y, m - 1, d).toLocaleDateString('fr-FR', {
+                        day: 'numeric', month: 'long', year: 'numeric'
+                    });
                 }
-            } catch (error) {
-                console.log('Could not load dates from main app');
+
+                if (data) {
+                    startEl.textContent = formatFR(data.start);
+                    endEl.textContent = formatFR(data.end);
+                } else {
+                    startEl.textContent = 'À définir';
+                    endEl.textContent = 'À définir';
+                }
+            } catch (e) {
+                console.log('⚠️ Impossible de charger les dates (ms_preparation_audit_initial).');
             }
         }
 
