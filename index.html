@@ -419,7 +419,6 @@
           switchTab('dashboard');
         }
 
-
         function updateOrganizationSummary() {
             const summaryContainer = document.getElementById('organizationSummary');
             const applicableIndicators = getApplicableIndicators();
@@ -504,7 +503,7 @@
                     daysBeforeTarget: 180,
                     duration: 30,
                     type: "preparation",
-                    link: "preparation_documentation_page.html" // exemple
+                    link: "preparation_documentation_page.html"
                 },
                 {
                     name: "Recevabilité",
@@ -539,6 +538,7 @@
                     link: ""
                 }
             ];
+            
             milestones.forEach(milestone => {
               // start = date de début
               const start = new Date(targetDate);
@@ -570,15 +570,16 @@
               });
             });
 
-displayTimeline(timeline);
+            displayTimeline(timeline);
+        }
 
-// Maintenant, la fonction ne recalcule plus endDate : elle reçoit start et end
-function getTimelineStatus(start, end) {
-  const today = new Date();
-  if (today > end) return 'completed';
-  if (today >= start && today <= end) return 'current';
-  return 'upcoming';
-}
+        // Maintenant, la fonction ne recalcule plus endDate : elle reçoit start et end
+        function getTimelineStatus(start, end) {
+          const today = new Date();
+          if (today > end) return 'completed';
+          if (today >= start && today <= end) return 'current';
+          return 'upcoming';
+        }
         
         function displayTimeline(timeline) {
             const container = document.getElementById('timeline');
@@ -594,13 +595,13 @@ function getTimelineStatus(start, end) {
                     ? `
                     <div style="margin-top:10px">
                         <a href="${item.link}" class="btn btn-primary" style="text-decoration:none;">
-                            Ouvrir la page liée
+                            Accéder à cette étape
                         </a>
                     </div>`
                     : `
                     <div style="margin-top:10px">
-                        <button class="btn btn-primary" style="opacity:.6; cursor:not-allowed;" disabled title="Lien à venir">
-                            Page liée (à venir)
+                        <button class="btn btn-primary" style="opacity:.6; cursor:not-allowed;" disabled title="Cette étape n'est pas encore disponible">
+                            Étape à venir
                         </button>
                     </div>`;
 
@@ -700,8 +701,18 @@ function getTimelineStatus(start, end) {
             const defaultTarget = new Date();
             defaultTarget.setMonth(defaultTarget.getMonth() + 6);
             targetInput.value = defaultTarget.toISOString().split('T')[0];
+
+            // Try to restore saved data
+            try {
+                const savedOrgData = localStorage.getItem('qualiopi_organization_data');
+                if (savedOrgData) {
+                    organizationData = JSON.parse(savedOrgData);
+                    updateOrganizationSummary();
+                }
+            } catch (error) {
+                console.log('No saved organization data found');
+            }
         });
     </script>
 </body>
 </html>
-
