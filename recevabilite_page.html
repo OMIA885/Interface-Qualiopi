@@ -50,6 +50,8 @@
         .tips-section li { margin-bottom: 8px; }
         .action-buttons { text-align: center; margin-top: 40px; }
         .btn { display: inline-block; padding: 15px 30px; border: none; border-radius: 25px; font-size: 1.1em; font-weight: 600; cursor: pointer; text-decoration: none; transition: all 0.3s ease; margin: 0 10px; }
+        .btn-primary { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3); }
         .btn-secondary { background: white; color: #667eea; border: 3px solid #667eea; }
         .btn-secondary:hover { background: #667eea; color: white; }
         @media (max-width: 768px) {
@@ -83,7 +85,7 @@
                     <div>Date de fin</div>
                 </div>
                 <div class="meta-item">
-                    <strong>Progression</strong>
+                    <strong>Étape 2/5</strong>
                     <div class="progress-percentagewhite" id="progress-percentagewhite">0%</div>
                 </div>
             </div>
@@ -100,8 +102,179 @@
             <p id="progress-text">0 tâches terminées sur 8</p>
         </div>
 
-        <!-- Étapes (inchangé) -->
-        <!-- ... (tout le contenu des étapes que tu as collé) ... -->
+        <!-- Étape 1: Validation du dossier -->
+        <div class="step-section">
+            <div class="step-header" onclick="toggleStep(1)">
+                <div class="step-title">📋 1. Finaliser et soumettre votre dossier</div>
+                <div class="step-progress" id="step-1-progress">0/3</div>
+                <div class="step-toggle" id="step-1-toggle">▼</div>
+            </div>
+            <div class="step-content" id="step-1-content">
+                <div class="substep" id="substep-1-1">
+                    <div class="substep-header" onclick="toggleSubstep('1-1')">
+                        <div class="substep-checkbox" id="checkbox-1-1"></div>
+                        <div class="substep-content">
+                            <div class="substep-title">Vérification finale du dossier</div>
+                            <div class="substep-description">
+                                <strong>Contrôle qualité avant envoi :</strong>
+                                <ul>
+                                    <li>Vérifier que tous les documents sont présents et actualisés</li>
+                                    <li>Contrôler la cohérence des informations entre les différents documents</li>
+                                    <li>S'assurer que les signatures sont présentes et valides</li>
+                                    <li>Faire une relecture complète par une tierce personne</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="substep" id="substep-1-2">
+                    <div class="substep-header" onclick="toggleSubstep('1-2')">
+                        <div class="substep-checkbox" id="checkbox-1-2"></div>
+                        <div class="substep-content">
+                            <div class="substep-title">Transmission officielle du dossier</div>
+                            <div class="substep-description">
+                                <strong>Envoi selon les modalités de l'organisme certificateur :</strong>
+                                <ul>
+                                    <li>Envoyer par voie dématérialisée (portail en ligne, email)</li>
+                                    <li>Respecter les formats de fichiers demandés (PDF de préférence)</li>
+                                    <li>Demander un accusé de réception</li>
+                                    <li>Conserver une copie complète de l'envoi avec horodatage</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="substep" id="substep-1-3">
+                    <div class="substep-header" onclick="toggleSubstep('1-3')">
+                        <div class="substep-checkbox" id="checkbox-1-3"></div>
+                        <div class="substep-content">
+                            <div class="substep-title">Confirmation de réception</div>
+                            <div class="substep-description">
+                                <strong>Validation de la bonne réception :</strong>
+                                <ul>
+                                    <li>Attendre l'accusé de réception dans les 48-72h</li>
+                                    <li>Vérifier que l'organisme certificateur a bien reçu tous les documents</li>
+                                    <li>Noter la date de réception officielle pour le suivi des délais</li>
+                                    <li>Relancer si pas de nouvelle après 1 semaine</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Étape 2: Examen de recevabilité -->
+        <div class="step-section">
+            <div class="step-header" onclick="toggleStep(2)">
+                <div class="step-title">🔍 2. Examen de recevabilité par l'organisme certificateur</div>
+                <div class="step-progress" id="step-2-progress">0/2</div>
+                <div class="step-toggle" id="step-2-toggle">▼</div>
+            </div>
+            <div class="step-content" id="step-2-content">
+                <div class="substep" id="substep-2-1">
+                    <div class="substep-header" onclick="toggleSubstep('2-1')">
+                        <div class="substep-checkbox" id="checkbox-2-1"></div>
+                        <div class="substep-content">
+                            <div class="substep-title">Contrôle administratif du dossier</div>
+                            <div class="substep-description">
+                                <strong>Vérification par l'organisme certificateur :</strong>
+                                <ul>
+                                    <li>Contrôle de la complétude du dossier</li>
+                                    <li>Vérification de la validité des documents fournis</li>
+                                    <li>Analyse de la cohérence des informations</li>
+                                    <li>Contrôle du respect des prérequis (NDA, activité effective)</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="substep" id="substep-2-2">
+                    <div class="substep-header" onclick="toggleSubstep('2-2')">
+                        <div class="substep-checkbox" id="checkbox-2-2"></div>
+                        <div class="substep-content">
+                            <div class="substep-title">Décision de recevabilité</div>
+                            <div class="substep-description">
+                                <strong>Notification de la décision :</strong>
+                                <ul>
+                                    <li>Réception de la notification (positive ou négative)</li>
+                                    <li>Si positive : autorisation de planifier l'audit initial</li>
+                                    <li>Si négative : analyse des motifs de refus</li>
+                                    <li>Délai typique : 15 jours ouvrés maximum</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Étape 3: Suite du processus -->
+        <div class="step-section">
+            <div class="step-header" onclick="toggleStep(3)">
+                <div class="step-title">📅 3. Planification de la suite</div>
+                <div class="step-progress" id="step-3-progress">0/3</div>
+                <div class="step-toggle" id="step-3-toggle">▼</div>
+            </div>
+            <div class="step-content" id="step-3-content">
+                <div class="substep" id="substep-3-1">
+                    <div class="substep-header" onclick="toggleSubstep('3-1')">
+                        <div class="substep-checkbox" id="checkbox-3-1"></div>
+                        <div class="substep-content">
+                            <div class="substep-title">Traitement des demandes de compléments</div>
+                            <div class="substep-description">
+                                <strong>Si des compléments sont demandés :</strong>
+                                <ul>
+                                    <li>Analyser précisément les demandes de l'organisme certificateur</li>
+                                    <li>Préparer et transmettre les documents complémentaires</li>
+                                    <li>Respecter les délais impartis (généralement 30 jours)</li>
+                                    <li>Confirmer la bonne réception des compléments</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="substep" id="substep-3-2">
+                    <div class="substep-header" onclick="toggleSubstep('3-2')">
+                        <div class="substep-checkbox" id="checkbox-3-2"></div>
+                        <div class="substep-content">
+                            <div class="substep-title">Contractualisation de l'audit</div>
+                            <div class="substep-description">
+                                <strong>Formalisation du processus d'audit :</strong>
+                                <ul>
+                                    <li>Signature du contrat d'audit avec l'organisme certificateur</li>
+                                    <li>Définition des modalités d'intervention (sur site, durée)</li>
+                                    <li>Validation du calendrier prévisionnel d'audit</li>
+                                    <li>Confirmation des modalités de paiement</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="substep" id="substep-3-3">
+                    <div class="substep-header" onclick="toggleSubstep('3-3')">
+                        <div class="substep-checkbox" id="checkbox-3-3"></div>
+                        <div class="substep-content">
+                            <div class="substep-title">Préparation de l'audit initial</div>
+                            <div class="substep-description">
+                                <strong>Transition vers la phase d'audit :</strong>
+                                <ul>
+                                    <li>Réception du calendrier définitif d'audit</li>
+                                    <li>Lancement de la préparation intensive aux 32 indicateurs</li>
+                                    <li>Constitution de l'équipe projet pour l'audit</li>
+                                    <li>Délai maximum de 12 mois pour réaliser l'audit initial</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <div class="tips-section">
             <h3>💡 Conseils pour réussir cette étape</h3>
@@ -110,11 +283,13 @@
                 <li><strong>Réactivité :</strong> Répondez rapidement aux demandes de compléments</li>
                 <li><strong>Suivi :</strong> Gardez un contact régulier avec votre organisme certificateur</li>
                 <li><strong>Patience :</strong> Cette étape est largement administrative, respectez les délais</li>
+                <li><strong>Documentation :</strong> Conservez tous les échanges et accusés de réception</li>
             </ul>
         </div>
 
         <div class="action-buttons">
             <a href="index.html" class="btn btn-secondary">← Retour au planning</a>
+            <button class="btn btn-primary" onclick="markAllAsCompleted()">Marquer tout comme terminé</button>
         </div>
     </div>
 
@@ -225,7 +400,21 @@
             updateGlobalProgress();
         }
         
-        // --------- CHANGEMENT ICI : chargement des dates depuis ms_recevabilite ----------
+        // Mark all as completed - FONCTION AJOUTÉE
+        function markAllAsCompleted() {
+            // Set all progress to true
+            Object.keys(progress).forEach(substepId => {
+                progress[substepId] = true;
+            });
+            
+            updateAllProgress();
+            saveProgress();
+            
+            // Show success message
+            alert('Toutes les tâches ont été marquées comme terminées !');
+        }
+        
+        // Load dates from localStorage using ms_recevabilite key
         function loadDates() {
             try {
                 const data = JSON.parse(localStorage.getItem('ms_recevabilite') || 'null');
@@ -251,7 +440,6 @@
                 console.log('⚠️ Impossible de charger les dates (ms_recevabilite).');
             }
         }
-        // -------------------------------------------------------------------------------
 
         // Format date (utilisé ailleurs si besoin)
         function formatDate(date) {
