@@ -853,7 +853,7 @@
 
         <div class="action-buttons">
             <a href="index.html" class="btn btn-secondary">← Retour au planning</a>
-            <button class="btn btn-primary" onclick="markAllAsRead()">Marquer tout comme lu</button>
+            <button class="btn btn-primary" onclick="markAllAsCompleted()">Marquer tout comme terminé</button>
         </div>
     </div>
 
@@ -985,22 +985,48 @@
             updateGlobalProgress();
         }
         
+        // Mark all as completed - FONCTION AJOUTÉE
+        function markAllAsCompleted() {
+            // Set all progress to true
+            Object.keys(progress).forEach(substepId => {
+                progress[substepId] = true;
+            });
+            
+            updateAllProgress();
+            saveProgress();
+            
+            // Show success message
+            alert('Toutes les tâches ont été marquées comme terminées !');
+        }
+        
         // Load dates from main app if available
         function loadDates() {
             try {
-                const planningData = localStorage.getItem('qualiopi_planning_data');
-                if (planningData) {
-                    const data = JSON.parse(planningData);
-                    if (data.timeline) {
-                        const prepTask = data.timeline.find(item => item.taskId === 'preparation-documentation');
-                        if (prepTask) {
-                            document.getElementById('start-date').textContent = formatDate(new Date(prepTask.startDate));
-                            document.getElementById('end-date').textContent = formatDate(new Date(prepTask.endDate));
-                        }
+                const savedData = localStorage.getItem('ms_preparation_documentation');
+                if (savedData) {
+                    const data = JSON.parse(savedData);
+                    if (data.start && data.end) {
+                        document.getElementById('start-date').textContent = formatDateFromString(data.start);
+                        document.getElementById('end-date').textContent = formatDateFromString(data.end);
                     }
                 }
             } catch (error) {
                 console.log('Could not load dates from main app');
+            }
+        }
+        
+        // Format date from YYYY-MM-DD string
+        function formatDateFromString(dateString) {
+            try {
+                const [year, month, day] = dateString.split('-').map(Number);
+                const date = new Date(year, month - 1, day);
+                return date.toLocaleDateString('fr-FR', {
+                    day: 'numeric',
+                    month: 'long',
+                    year: 'numeric'
+                });
+            } catch (error) {
+                return 'À définir';
             }
         }
         
